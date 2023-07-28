@@ -48,69 +48,103 @@ function start() {
     }
 }
 start()
-    let mv1 = [0,0]
-    let mv2 = [0,0]
-    let mv3 = [0,0]
-    let mv4 = [0,0]
+let mv1 = [0, 0]
+let mv2 = [0, 0]
+let mv3 = [0, 0]
+let mv4 = [0, 0]
 
 function select(e) {
     let alvo = e.target
+    const selected = document.querySelector(' .selected')
+    
     if (alvo.tagName === 'P') {
-        const selected = document.querySelector(' .selected')
+        
+        let cell = alvo.parentElement.id.split(',');
+            cell = cell.map(Number);  
+            
+
+        const movA = document.getElementById(direction(cell, 'a'))
+        const movB = document.getElementById(direction(cell, 'b'))
+        const movC = document.getElementById(direction(cell, 'c'))
+        const movD = document.getElementById(direction(cell, 'd'))
+        
+        //selected = alvo(rm) | alvo != selected e != null(rm e add) | selected =null(add)
         if (selected) {
             selected.classList.remove('selected')
-        }
-        alvo.classList.add('selected')
-        if (alvo == selected) {
-            alvo.classList.remove('selected')
+            const mvSelected = document.getElementsByClassName('movs');
+            mvSelected[0].classList.remove('movs')
+            mvSelected[0].classList.remove('movs')
+
+            if (selected != alvo) {
+                alvo.classList.add('selected')
+
+                if (alvo.style.backgroundColor == 'white') {
+                    movC.classList.toggle('movs')
+                    movD.classList.toggle('movs')
+                } else if (alvo.style.backgroundColor == 'blue') {
+                    movA.classList.toggle('movs')
+                    movB.classList.toggle('movs')
+                }
+            }
+        }else{
+            alvo.classList.add('selected')
+
+            if (alvo.style.backgroundColor == 'white') {
+                movC.classList.toggle('movs')
+                movD.classList.toggle('movs')
+            } else if (alvo.style.backgroundColor == 'blue') {
+                movA.classList.toggle('movs')
+                movB.classList.toggle('movs')
+            }
         }
 
-        let cell = alvo.parentElement.id.split(',');
-        cell = cell.map(Number);
-        
-        //Movimentos possíveis
-        if(alvo.style.backgroundColor == 'white'){
-            document.getElementById(moviment(cell,'c')).classList.toggle('movs')
-            document.getElementById(moviment(cell,'d')).classList.toggle('movs')
-        }else if(alvo.style.backgroundColor == 'blue'){
-            document.getElementById(moviment(cell,'a')).classList.toggle('movs')
-            document.getElementById(moviment(cell,'b')).classList.toggle('movs')
-        }
-        
-        
+    } else if (alvo.tagName === 'DIV') {
+        if (selected) {
+            const moviment = alvo.id
+            const cellSelected = selected.parentElement.id.split(',').map(Number)
+            console.log(moviment);
+            if (selected.style.backgroundColor == 'white') {
+                const option1 = direction(cellSelected,'c')
+                const option2 = direction(cellSelected,'d')
+                if(alvo.id == option1 || alvo.id == option2){
+                    document.getElementById(alvo.id).appendChild(selected)
+                }
+                
+                console.log(direction(cellSelected,'d'),'movimento d');
+            }else if(selected.style.backgroundColor == 'blue'){
+                const option1 = direction(cellSelected,'a')
+                const option2 = direction(cellSelected,'b')
 
-        //'Destaca as casas'
-        // mv1.classList.toggle('movs')
-        // mv2.classList.toggle('movs')
-        // mv3.classList.toggle('movs')
-        // mv4.classList.toggle('movs')
-        
-    }else if(alvo.tagName === 'DIV'){
-        console.log(alvo.id);
+                if(alvo.id == option1 || alvo.id == option2){
+                    document.getElementById(alvo.id).appendChild(selected)
+                }
+            }
+            
+        }
     }
 }
 
-function moviment(posicion,direcion) {
-    let newMoviment = [0,0];       //movimento Saida  
+function direction(posicion, option) {
+    let newMoviment = [0, 0];       //movimento Saida  
 
-    switch (direcion) {
+    switch (option) {
         case 'a':
-            newMoviment[0] = posicion[0]+1;
-            newMoviment[1] = posicion[1]+1;
+            newMoviment[0] = posicion[0] + 1;
+            newMoviment[1] = posicion[1] + 1;
             break;
         case 'b':
-            newMoviment[0] = posicion[0]+1;
-            newMoviment[1] = posicion[1]-1;
+            newMoviment[0] = posicion[0] + 1;
+            newMoviment[1] = posicion[1] - 1;
             break;
         case 'c':
-            newMoviment[0] = posicion[0]-1;
-            newMoviment[1] = posicion[1]-1;
+            newMoviment[0] = posicion[0] - 1;
+            newMoviment[1] = posicion[1] - 1;
             break;
         case 'd':
-            newMoviment[0] = posicion[0]-1;
-            newMoviment[1] = posicion[1]+1;
+            newMoviment[0] = posicion[0] - 1;
+            newMoviment[1] = posicion[1] + 1;
             break;
-    
+
         default:
             console.log('erro');
             break;
@@ -125,4 +159,4 @@ function moviment(posicion,direcion) {
 }
 //const teste1 = document.getElementById('teste')
 //teste1.addEventListener('click',moviment)
-board.addEventListener('click',select)
+board.addEventListener('click', select)
