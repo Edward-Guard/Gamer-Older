@@ -59,34 +59,25 @@ function select(e) {
         const selected = document.querySelector(' .selected')
         if (selected) {
             selected.classList.remove('selected')
-        //    mv1.classList.toggle('movs') 
-        //     mv2.classList.toggle('movs')
-        //     mv3.classList.toggle('movs')
-        //     mv4.classList.toggle('movs')
         }
         alvo.classList.add('selected')
         if (alvo == selected) {
             alvo.classList.remove('selected')
-        //     mv1.classList.toggle('movs')
-        //     mv2.classList.toggle('movs')
-        //     mv3.classList.toggle('movs')
-        //     mv4.classList.toggle('movs')
         }
 
         let cell = alvo.parentElement.id.split(',');
         cell = cell.map(Number);
         
-        // mv1 = [cell[0]-1,cell[1]+1] 
-        // mv2 = [cell[0]-1,cell[1]-1] 
-        // mv3 = [cell[0]+1,cell[1]+1] 
-        // mv4 = [cell[0]+1,cell[1]-1] 
-    
-
-        //Captura a casa com o id
-        // mv1 = document.getElementById(`${mv1}`)
-        // mv2 = document.getElementById(`${mv2}`)
-        // mv3 = document.getElementById(`${mv3}`)
-        // mv4 = document.getElementById(`${mv4}`)
+        //Movimentos possíveis
+        if(alvo.style.backgroundColor == 'white'){
+            document.getElementById(moviment(cell,'c')).classList.toggle('movs')
+            document.getElementById(moviment(cell,'d')).classList.toggle('movs')
+        }else if(alvo.style.backgroundColor == 'blue'){
+            document.getElementById(moviment(cell,'a')).classList.toggle('movs')
+            document.getElementById(moviment(cell,'b')).classList.toggle('movs')
+        }
+        
+        
 
         //'Destaca as casas'
         // mv1.classList.toggle('movs')
@@ -99,4 +90,39 @@ function select(e) {
     }
 }
 
+function moviment(posicion,direcion) {
+    let newMoviment = [0,0];       //movimento Saida  
+
+    switch (direcion) {
+        case 'a':
+            newMoviment[0] = posicion[0]+1;
+            newMoviment[1] = posicion[1]+1;
+            break;
+        case 'b':
+            newMoviment[0] = posicion[0]+1;
+            newMoviment[1] = posicion[1]-1;
+            break;
+        case 'c':
+            newMoviment[0] = posicion[0]-1;
+            newMoviment[1] = posicion[1]-1;
+            break;
+        case 'd':
+            newMoviment[0] = posicion[0]-1;
+            newMoviment[1] = posicion[1]+1;
+            break;
+    
+        default:
+            console.log('erro');
+            break;
+    }
+    return `${newMoviment[0]},${newMoviment[1]}`;
+    //Pega a posição e retorna uma nova posição
+    //1-"Mostra as possibilidades" 2-"Movimenta a peça para a nova posição"
+
+    //4 direcoes a[x+1,y+1] b[x+1,y-1] c[x-1,y-1] d[x-1,y+1]
+    //Branco 6,5 > 5,4 | 5,6 c[] e d[]
+    //Azul a[] e b[]
+}
+//const teste1 = document.getElementById('teste')
+//teste1.addEventListener('click',moviment)
 board.addEventListener('click',select)
