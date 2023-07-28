@@ -157,6 +157,5 @@ function direction(posicion, option) {
     //Branco 6,5 > 5,4 | 5,6 c[] e d[]
     //Azul a[] e b[]
 }
-//const teste1 = document.getElementById('teste')
-//teste1.addEventListener('click',moviment)
+
 board.addEventListener('click', select)

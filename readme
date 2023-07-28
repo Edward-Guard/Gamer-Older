@@ -1,0 +1,6 @@
+Próximas tarefas
+1-Resolver o bug em que não mostra os movimentos possiveis se uma das casas não existe.
+2-Resolver o bug em que caso se mova para uma casa que já existe peças desaparece.
+3-Não mostrar como movimento válido se a casa pretendida tiver uma outra peça.
+4-Criar uma lógica de captura caso haja uma peça inimiga na casa que serve de opção e um espaço vazio adjacente.
+5-Resetar as opções e ou remover o selected após movimentar a peça.
