@@ -48,18 +48,52 @@ function start() {
     }
 }
 start()
+    let mv1 = [0,0]
+    let mv2 = [0,0]
+    let mv3 = [0,0]
+    let mv4 = [0,0]
 
 function select(e) {
     let alvo = e.target
-    let mv1 = [0,0]
-    let mv2 = [0,0]
     if (alvo.tagName === 'P') {
-        let casa = alvo.parentElement.id.split(',');
-        console.log(casa);
-        //5,6 > 4,5 e 4,7
-        mv1 = [casa[0] -1,casa[1]];
-        mv2 = [casa[0] -1,casa[1]-1];
-        console.log(mv1,mv2);
+        const selected = document.querySelector(' .selected')
+        if (selected) {
+            selected.classList.remove('selected')
+        //    mv1.classList.toggle('movs') 
+        //     mv2.classList.toggle('movs')
+        //     mv3.classList.toggle('movs')
+        //     mv4.classList.toggle('movs')
+        }
+        alvo.classList.add('selected')
+        if (alvo == selected) {
+            alvo.classList.remove('selected')
+        //     mv1.classList.toggle('movs')
+        //     mv2.classList.toggle('movs')
+        //     mv3.classList.toggle('movs')
+        //     mv4.classList.toggle('movs')
+        }
+
+        let cell = alvo.parentElement.id.split(',');
+        cell = cell.map(Number);
+        
+        // mv1 = [cell[0]-1,cell[1]+1] 
+        // mv2 = [cell[0]-1,cell[1]-1] 
+        // mv3 = [cell[0]+1,cell[1]+1] 
+        // mv4 = [cell[0]+1,cell[1]-1] 
+    
+
+        //Captura a casa com o id
+        // mv1 = document.getElementById(`${mv1}`)
+        // mv2 = document.getElementById(`${mv2}`)
+        // mv3 = document.getElementById(`${mv3}`)
+        // mv4 = document.getElementById(`${mv4}`)
+
+        //'Destaca as casas'
+        // mv1.classList.toggle('movs')
+        // mv2.classList.toggle('movs')
+        // mv3.classList.toggle('movs')
+        // mv4.classList.toggle('movs')
+        
     }else if(alvo.tagName === 'DIV'){
         console.log(alvo.id);
     }

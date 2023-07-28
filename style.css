@@ -4,11 +4,11 @@
     height: auto;
     display: grid;
     grid-template-columns: repeat(8,80px);
+    grid-template-rows: repeat(8,80px);
 }
 
 .square{
     background-color: white;
-    height: 80px;
     border: 1px solid black;
     
 }
@@ -20,4 +20,11 @@
     
     margin: auto;
     margin-top: 10px;
+}
+.movs{
+    border: 2px solid gold;
+}
+
+.selected{
+    border: 3px solid red;
 }
