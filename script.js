@@ -48,10 +48,6 @@ function start() {
     }
 }
 start()
-let mv1 = [0, 0]
-let mv2 = [0, 0]
-let mv3 = [0, 0]
-let mv4 = [0, 0]
 
 function select(e) {
     let alvo = e.target
@@ -72,37 +68,38 @@ function select(e) {
         if (selected) {
             selected.classList.remove('selected')
             const mvSelected = document.getElementsByClassName('movs');
-            mvSelected[0].classList.remove('movs')
-            mvSelected[0].classList.remove('movs')
+            //mvSelected[0].classList.remove('movs')
+            //mvSelected[0].classList.remove('movs')
 
             if (selected != alvo) {
                 alvo.classList.add('selected')
-
+                possibility(cell[0],cell[1])
                 if (alvo.style.backgroundColor == 'white') {
-                    movC.classList.toggle('movs')
-                    movD.classList.toggle('movs')
+                    
+                    //movC.classList.toggle('movs')
+                    //movD.classList.toggle('movs')
                 } else if (alvo.style.backgroundColor == 'blue') {
-                    movA.classList.toggle('movs')
-                    movB.classList.toggle('movs')
+                    //movA.classList.toggle('movs')
+                    //movB.classList.toggle('movs')
                 }
             }
         }else{
             alvo.classList.add('selected')
-
+            possibility(cell[0],cell[1])
             if (alvo.style.backgroundColor == 'white') {
-                movC.classList.toggle('movs')
-                movD.classList.toggle('movs')
+                //movC.classList.toggle('movs')
+                //movD.classList.toggle('movs')
             } else if (alvo.style.backgroundColor == 'blue') {
-                movA.classList.toggle('movs')
-                movB.classList.toggle('movs')
+                //movA.classList.toggle('movs')
+                //movB.classList.toggle('movs')
             }
         }
-
+        //Movimento
     } else if (alvo.tagName === 'DIV') {
         if (selected) {
             const moviment = alvo.id
             const cellSelected = selected.parentElement.id.split(',').map(Number)
-            console.log(moviment);
+            console.log(cellSelected);
             if (selected.style.backgroundColor == 'white') {
                 const option1 = direction(cellSelected,'c')
                 const option2 = direction(cellSelected,'d')
@@ -110,7 +107,6 @@ function select(e) {
                     document.getElementById(alvo.id).appendChild(selected)
                 }
                 
-                console.log(direction(cellSelected,'d'),'movimento d');
             }else if(selected.style.backgroundColor == 'blue'){
                 const option1 = direction(cellSelected,'a')
                 const option2 = direction(cellSelected,'b')
@@ -158,4 +154,13 @@ function direction(posicion, option) {
     //Azul a[] e b[]
 }
 
+function possibility(a,b) {
+    console.log(a,b);
+    //5,0 => 4,1
+    if(a == 0 || a == 7 || b == 0 || b == 7 ){
+        console.log('Erro');
+    }
+}
+const teste1 = document.getElementById('teste')
+teste1.addEventListener('click',possibility)
 board.addEventListener('click', select)
