@@ -48,47 +48,6 @@ function start() {
     }
 }
 start()
-function select(e) {
-    let alvo = e.target
-    const selected = document.querySelector(' .selected')
-
-    if (alvo.tagName === 'P') {
-
-        const cell = alvo.parentElement.id.split(',').map(Number);
-
-        if (selected) {
-            rmSelected(selected)
-            if (selected != alvo) {
-                alvo.classList.add('selected')
-                possibility(cell, alvo.style.backgroundColor).forEach(e => {
-                    e.classList.toggle('movs')
-                });
-            }
-
-        } else {
-            alvo.classList.add('selected')
-
-            possibility(cell, alvo.style.backgroundColor).forEach(Element => {
-                Element.classList.toggle('movs')
-            });
-
-        }
-        //Movimento
-    } else if (alvo.tagName === 'DIV') {
-        if (selected) {
-            const cellSelected = selected.parentElement.id.split(',').map(Number)
-            const b = possibility(cellSelected, selected.style.backgroundColor)
-            
-            
-            b.forEach(element => {
-                if (element.id == alvo.id) {
-                    document.getElementById(alvo.id).appendChild(selected)
-                    rmSelected(selected)
-                }
-            });
-        }
-    }
-}
 
 function direction(posicion, option, increment) {
     let newMoviment = [0, 0];       //movimento Saida  
@@ -186,6 +145,50 @@ function capture(a,b,c) {
         return document.getElementById(direction(posicion,c)); 
     }
 }
+
+function select(e) {
+    let alvo = e.target
+    const selected = document.querySelector(' .selected')
+
+    if (alvo.tagName === 'P') {
+
+        const cell = alvo.parentElement.id.split(',').map(Number);
+
+        if (selected) {
+            rmSelected(selected)
+            if (selected != alvo) {
+                alvo.classList.add('selected')
+                possibility(cell, alvo.style.backgroundColor).forEach(e => {
+                    e.classList.toggle('movs')
+                });
+            }
+
+        } else {
+            alvo.classList.add('selected')
+
+            possibility(cell, alvo.style.backgroundColor).forEach(Element => {
+                Element.classList.toggle('movs')
+            });
+
+        }
+        //Movimento
+    } else if (alvo.tagName === 'DIV') {
+        if (selected) {
+            const cellSelected = selected.parentElement.id.split(',').map(Number)
+            const b = possibility(cellSelected, selected.style.backgroundColor)
+            
+            
+            b.forEach(element => {
+                if (element.id == alvo.id) {
+                    document.getElementById(alvo.id).appendChild(selected)
+                    rmSelected(selected)
+                }
+            });
+        }
+    }
+}
+
+
 
 //Remover elemento selecionado
 function rmSelected(selected) {
