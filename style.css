@@ -28,3 +28,7 @@
 .selected{
     border: 3px solid red;
 }
+
+.capture{
+    border: 2px solid orangered;
+}

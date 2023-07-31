@@ -48,103 +48,74 @@ function start() {
     }
 }
 start()
-
 function select(e) {
     let alvo = e.target
     const selected = document.querySelector(' .selected')
-    
+
     if (alvo.tagName === 'P') {
-        
-        let cell = alvo.parentElement.id.split(',');
-            cell = cell.map(Number);  
-            
 
-        const movA = document.getElementById(direction(cell, 'a'))
-        const movB = document.getElementById(direction(cell, 'b'))
-        const movC = document.getElementById(direction(cell, 'c'))
-        const movD = document.getElementById(direction(cell, 'd'))
-        
-        //selected = alvo(rm) | alvo != selected e != null(rm e add) | selected =null(add)
+        const cell = alvo.parentElement.id.split(',').map(Number);
+
         if (selected) {
-            selected.classList.remove('selected')
-            const mvSelected = document.getElementsByClassName('movs');
-            //mvSelected[0].classList.remove('movs')
-            //mvSelected[0].classList.remove('movs')
-
+            rmSelected(selected)
             if (selected != alvo) {
                 alvo.classList.add('selected')
-                possibility(cell[0],cell[1])
-                if (alvo.style.backgroundColor == 'white') {
-                    
-                    //movC.classList.toggle('movs')
-                    //movD.classList.toggle('movs')
-                } else if (alvo.style.backgroundColor == 'blue') {
-                    //movA.classList.toggle('movs')
-                    //movB.classList.toggle('movs')
-                }
+                possibility(cell, alvo.style.backgroundColor).forEach(e => {
+                    e.classList.toggle('movs')
+                });
             }
-        }else{
+
+        } else {
             alvo.classList.add('selected')
-            possibility(cell[0],cell[1])
-            if (alvo.style.backgroundColor == 'white') {
-                //movC.classList.toggle('movs')
-                //movD.classList.toggle('movs')
-            } else if (alvo.style.backgroundColor == 'blue') {
-                //movA.classList.toggle('movs')
-                //movB.classList.toggle('movs')
-            }
+
+            possibility(cell, alvo.style.backgroundColor).forEach(Element => {
+                Element.classList.toggle('movs')
+            });
+
         }
         //Movimento
     } else if (alvo.tagName === 'DIV') {
         if (selected) {
-            const moviment = alvo.id
             const cellSelected = selected.parentElement.id.split(',').map(Number)
-            console.log(cellSelected);
-            if (selected.style.backgroundColor == 'white') {
-                const option1 = direction(cellSelected,'c')
-                const option2 = direction(cellSelected,'d')
-                if(alvo.id == option1 || alvo.id == option2){
-                    document.getElementById(alvo.id).appendChild(selected)
-                }
-                
-            }else if(selected.style.backgroundColor == 'blue'){
-                const option1 = direction(cellSelected,'a')
-                const option2 = direction(cellSelected,'b')
-
-                if(alvo.id == option1 || alvo.id == option2){
-                    document.getElementById(alvo.id).appendChild(selected)
-                }
-            }
+            const b = possibility(cellSelected, selected.style.backgroundColor)
             
+            
+            b.forEach(element => {
+                if (element.id == alvo.id) {
+                    document.getElementById(alvo.id).appendChild(selected)
+                    rmSelected(selected)
+                }
+            });
         }
     }
 }
 
-function direction(posicion, option) {
+function direction(posicion, option, increment) {
     let newMoviment = [0, 0];       //movimento Saida  
 
     switch (option) {
         case 'a':
-            newMoviment[0] = posicion[0] + 1;
-            newMoviment[1] = posicion[1] + 1;
+            newMoviment[0] = posicion[0] + (increment || 1);
+            newMoviment[1] = posicion[1] + (increment || 1);
             break;
         case 'b':
-            newMoviment[0] = posicion[0] + 1;
-            newMoviment[1] = posicion[1] - 1;
+            newMoviment[0] = posicion[0] + (increment || 1);
+            newMoviment[1] = posicion[1] - (increment || 1);
             break;
         case 'c':
-            newMoviment[0] = posicion[0] - 1;
-            newMoviment[1] = posicion[1] - 1;
+            newMoviment[0] = posicion[0] - (increment || 1);
+            newMoviment[1] = posicion[1] - (increment || 1);
             break;
         case 'd':
-            newMoviment[0] = posicion[0] - 1;
-            newMoviment[1] = posicion[1] + 1;
+            newMoviment[0] = posicion[0] - (increment || 1);
+            newMoviment[1] = posicion[1] + (increment || 1);
             break;
 
         default:
             console.log('erro');
             break;
     }
+
     return `${newMoviment[0]},${newMoviment[1]}`;
     //Pega a posição e retorna uma nova posição
     //1-"Mostra as possibilidades" 2-"Movimenta a peça para a nova posição"
@@ -154,13 +125,84 @@ function direction(posicion, option) {
     //Azul a[] e b[]
 }
 
-function possibility(a,b) {
-    console.log(a,b);
+function possibility(posicion, color) {
+    //a = cell b = corPeça c= ?Dama
+    const possibilites = [];
+    if (posicion[0] != 7 && posicion[1] != 7 && color == 'blue') {
+        //Checamos se tem alguma peça naquela lugar
+        const posicionA = document.getElementById(direction(posicion, 'a'))
+        if (!posicionA.hasChildNodes()) {
+            possibilites.push(posicionA)
+        }else{
+            if (!capture(posicionA,color,'a').hasChildNodes()) {
+              //  captura.push(capture(posicionA,color,'a'));
+            }
+        }
+    }
+    if (posicion[0] != 7 && posicion[1] != 0 && color == 'blue') {
+        const posicionB = document.getElementById(direction(posicion, 'b'))
+        if (!posicionB.hasChildNodes()) {
+            possibilites.push(posicionB)
+        }else{
+            if (!capture(posicionB,color,'b').hasChildNodes()) {
+               // captura.push(capture(posicionB,color,'b'));
+            }
+        }
+
+    }
+    if (posicion[0] != 0 && posicion[1] != 0 && color == 'white') {
+        const posicionC = document.getElementById(direction(posicion, 'c'))
+        if (!posicionC.hasChildNodes()) {
+            possibilites.push(posicionC)
+        }else{
+            if (!capture(posicionC,color,'c').hasChildNodes()) {
+              //  captura.push(capture(posicionC,color,'c'));
+            }
+        }
+    }
+    if (posicion[0] != 0 && posicion[1] != 7 && color == 'white') {
+        const posicionD = document.getElementById(direction(posicion, 'd'))
+        if (!posicionD.hasChildNodes()) {
+            possibilites.push(posicionD)
+        }else{
+            if (!capture(posicionD,color,'d').hasChildNodes()) {
+              //  captura.push(capture(posicionD,color,'d'));
+            }
+        }
+    }
+    return possibilites
+    //cell = Posição Peça //Direção=Novas posições //Possibilitity-
+    //[a,b] => A=[a+1,b+1],B=[a-1,b+1],C=[-1,b-1],D=[a-1,b+1]
+    //[C][-][D]     [4,5][---][4,7] 
+    //[-][P][-]     [---][5,6][---]
+    //[B][-][A]     [6,5][---][6,7]
+    // a ou b = 7   
     //5,0 => 4,1
-    if(a == 0 || a == 7 || b == 0 || b == 7 ){
-        console.log('Erro');
+}
+function capture(a,b,c) {
+    const pedra = a.firstChild.style.backgroundColor
+    const posicion = a.id.split(',').map(Number)
+    if (pedra != b) {
+        return document.getElementById(direction(posicion,c)); 
     }
 }
-const teste1 = document.getElementById('teste')
-teste1.addEventListener('click',possibility)
+
+//Remover elemento selecionado
+function rmSelected(selected) {
+    selected.classList.remove('selected')
+    const mvSelected = document.getElementsByClassName('movs');
+    const capSelected = document.getElementsByClassName('capture')
+    if (length in mvSelected) {
+        for (let i = 0; i <= mvSelected.length; i += 1) {
+            mvSelected[0].classList.remove('movs')
+        }
+    }
+    if (length in capSelected) {
+        for (let i = 0; i <= capSelected.length; i += 1) {
+            capSelected[0].classList.remove('capture')
+        }
+    }
+     
+}
+
 board.addEventListener('click', select)
