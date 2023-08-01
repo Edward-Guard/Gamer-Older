@@ -1,5 +1,4 @@
 const board = document.getElementById('board')
-
 //Geradoras
 function makeCells(position, color) {
     const cell = document.createElement('div');
@@ -72,6 +71,7 @@ function rmMarkeds() {
     }
 }
 
+//Lógica de movimentação
 function direction(position, option, increment) {
 
     const movements = {
@@ -174,7 +174,9 @@ function capture(target) {
     }
 }
 
+//Lógica de seleção de peça e direção do movimento
 function select(e) {
+    
     let alvo = e.target
     const selected = $(".selected")[0]
 
@@ -189,11 +191,13 @@ function select(e) {
                     e.classList.toggle('movs')
                 });
                 capture()
+                changePlayer()
+
             }
         } else {
             alvo.classList.add('selected')
-            moves(cell, alvo.style.backgroundColor).forEach(Element => {
-                Element.classList.toggle('movs')
+            moves(cell, alvo.style.backgroundColor).forEach(e => {
+                e.classList.toggle('movs')
             });
             capture()
         }
@@ -213,4 +217,20 @@ function select(e) {
         }
     }
 }
+
+function changePlayer(){
+    const turnPlayer = $("#turn")
+    const player1 = $('.player-1')
+    const player2 = $('.player-2')
+    
+    if (player1.get(0) == turnPlayer.parent().get(0)) {
+       player2.append(turnPlayer)
+    }else{
+        player1.append(turnPlayer)
+    }
+    console.log(turnPlayer);
+    console.log(player1);
+}
+
+
 board.addEventListener('click', select)
