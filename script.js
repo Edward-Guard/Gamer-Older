@@ -45,6 +45,7 @@ function start() {
             house[i].appendChild(makePiece(`w${count}`, 'white'))
         }
     }
+    $('#w12').addClass('dame');
 }
 makeBoard();
 start()
@@ -126,17 +127,7 @@ function capture(target) {
         const cord = selected.parentElement.id.split('-').map(Number)
         const directions = ['a', 'b', 'c', 'd']
         checkAround(cord)
-        //1-Pegar as coordenadas da peça.
-        //2-Checar se tem peças inimigas ao redor.
-        // for diretions in cord=> 4 vizinhos => Checar se existem e se há filhos com cord adversária.
-        //3-Checar se o espaço seguinte existe e está livre.
-        //Se o click for igual a esse espaço fazer mudar a posição.
-        //4-Chamar novamente de 1-3
-
-        /*Capture = 3códigos 1-Checa se há peças inimigas ao redor com espaço livre seguinte a elas.
-                             2-Pinta as casas livres
-                             3-Se houver um target == ao espaço livre muda a peça de posição e elimina a rival.
-        */
+        
         function markCap(cell) {
                 cell.classList.add('capture');
         }
@@ -166,6 +157,7 @@ function capture(target) {
                     rmMarkeds()
                     checkAround(NCord)
                 }else{
+                    changePlayer()
                     rmSelected()
                 }           
             }
@@ -179,9 +171,12 @@ function select(e) {
     
     let alvo = e.target
     const selected = $(".selected")[0]
+    const turnPlayer = $("#turn").parent().get(0).id
+    const ownerPiece = turnPlayer == alvo.style.backgroundColor
 
     //Escolher a pedra
-    if (alvo.tagName === 'P') {
+    if (alvo.tagName === 'P' && ownerPiece) {
+    
         const cell = alvo.parentElement.id.split('-').map(Number);
         if (selected) {
             rmSelected()
@@ -191,7 +186,6 @@ function select(e) {
                     e.classList.toggle('movs')
                 });
                 capture()
-                changePlayer()
 
             }
         } else {
@@ -209,11 +203,12 @@ function select(e) {
             b.forEach(element => {
                 if (element.id == alvo.id && $("#"+element.id).hasClass('movs')) {
                     document.getElementById(alvo.id).appendChild(selected)
-                    rmSelected()
-                    
+                    changePlayer()
+                    rmSelected()                
                 }
             });
             capture(alvo)
+            
         }
     }
 }
@@ -222,14 +217,13 @@ function changePlayer(){
     const turnPlayer = $("#turn")
     const player1 = $('.player-1')
     const player2 = $('.player-2')
-    
+
     if (player1.get(0) == turnPlayer.parent().get(0)) {
        player2.append(turnPlayer)
     }else{
-        player1.append(turnPlayer)
+       player1.append(turnPlayer)
     }
-    console.log(turnPlayer);
-    console.log(player1);
+    console.log('Troca');
 }
 
 

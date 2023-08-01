@@ -13,6 +13,13 @@
     
 }
 
+.white{
+    background-color: white;
+}
+.blue{
+    background-color: blue;
+}
+
 .piece{
     width: 60px;
     height: 60px;
@@ -77,4 +84,10 @@
     flex-direction: row;
     background-color: antiquewhite;
     width: 210px;
+}
+
+.dame{
+    border: 3px solid gold;
+    background-image: url(https://img.icons8.com/?size=512&id=22898&format=png);
+    background-size: contain;
 }
