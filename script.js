@@ -53,10 +53,13 @@ start()
 //Remover elemento selecionado
 function rmSelected() {
     const selected = $(".selected")[0]
+    selected.classList.remove('selected')
+    rmMarkeds()
+}
+function rmMarkeds() {
     const mvSelected = document.getElementsByClassName('movs');
     const capSelected = document.getElementsByClassName('capture')
-    
-    selected.classList.remove('selected')
+
     if (length in mvSelected) {
         for (let i = 0; i <= mvSelected.length; i += 1) {
             mvSelected[0].classList.remove('movs')
@@ -67,7 +70,6 @@ function rmSelected() {
             capSelected[0].classList.remove('capture')
         }
     }
-
 }
 
 function direction(position, option, increment) {
@@ -122,25 +124,58 @@ function capture(target) {
     if (selected) {
         const color = selected.style.backgroundColor
         const cord = selected.parentElement.id.split('-').map(Number)
+        //const NCord= target.id.split('-').map(Number)
         const directions = ['a', 'b', 'c', 'd']
-        console.log(cord);
 
-        directions.forEach(element => {
-            const direcao = $('#' + direction(cord, element, 1))[0]
-            if (direcao && direcao.hasChildNodes() && direcao.firstChild.style.backgroundColor != color ) {
-                const capturePosition = $('#' + direction(cord, element, 2))[0]
-                /*
-                if (capturePosition && !capturePosition.hasChildNodes()) {
-                    capturePosition.classList.add('capture');
-                }
-                //move
-                if (target && target == capturePosition && !target.hasChildNodes()) {
-                    direcao.innerHTML = '';
-                    capturePosition.appendChild(selected)  
-                }
-                */
+        //1-Pegar as coordenadas da peça.
+        //2-Checar se tem peças inimigas ao redor.
+        // for diretions in cord=> 4 vizinhos => Checar se existem e se há filhos com cord adversária.
+        //3-Checar se o espaço seguinte existe e está livre.
+        //Se o click for igual a esse espaço fazer mudar a posição.
+        //4-Chamar novamente de 1-3
+
+        /*Capture = 3códigos 1-Checa se há peças inimigas ao redor com espaço livre seguinte a elas.
+                             2-Pinta as casas livres
+                             3-Se houver um target == ao espaço livre muda a peça de posição e elimina a rival.
+        */
+        function markCap(cell) {
+            if (cell && !cell.hasChildNodes()) {
+                cell.classList.add('capture');
             }
-        });
+        }
+
+        function checkAround(position) {
+            let cont = 0
+            directions.forEach(dir => {
+                const opcion = $('#' + direction(position, dir, 1))[0];
+                if (opcion && opcion.hasChildNodes() && opcion.firstChild.style.backgroundColor != color) {
+                    const nextCell = $('#' + direction(position, dir, 2))[0] 
+                    markCap(nextCell)
+                    mvCap(opcion,nextCell)
+                    if (nextCell && !nextCell.hasChildNodes()) {
+                        cont +=1
+                    }
+                }
+            });
+            return cont
+        }
+        
+        function mvCap(opcion,nextCell) {
+            if(target && target == nextCell && !target.hasChildNodes()){
+                opcion.innerHTML = '';
+                nextCell.appendChild(selected)
+                const NCord= target.id.split('-').map(Number)
+                if (checkAround(NCord) != 0) {
+                    rmMarkeds()
+                    checkAround(NCord)
+                }else{
+                    rmSelected()
+                }           
+            }
+        }
+
+        checkAround(cord)
+
     }
 }
 
@@ -173,9 +208,10 @@ function select(e) {
             const b = moves(cellSelected, selected.style.backgroundColor)
 
             b.forEach(element => {
-                if (element.id == alvo.id) {
+                if (element.id == alvo.id && $("#"+element.id).hasClass('movs')) {
                     document.getElementById(alvo.id).appendChild(selected)
                     rmSelected()
+                    
                 }
             });
             capture(alvo)
