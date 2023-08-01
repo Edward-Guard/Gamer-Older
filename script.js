@@ -124,9 +124,8 @@ function capture(target) {
     if (selected) {
         const color = selected.style.backgroundColor
         const cord = selected.parentElement.id.split('-').map(Number)
-        //const NCord= target.id.split('-').map(Number)
         const directions = ['a', 'b', 'c', 'd']
-
+        checkAround(cord)
         //1-Pegar as coordenadas da peça.
         //2-Checar se tem peças inimigas ao redor.
         // for diretions in cord=> 4 vizinhos => Checar se existem e se há filhos com cord adversária.
@@ -139,9 +138,7 @@ function capture(target) {
                              3-Se houver um target == ao espaço livre muda a peça de posição e elimina a rival.
         */
         function markCap(cell) {
-            if (cell && !cell.hasChildNodes()) {
                 cell.classList.add('capture');
-            }
         }
 
         function checkAround(position) {
@@ -150,10 +147,10 @@ function capture(target) {
                 const opcion = $('#' + direction(position, dir, 1))[0];
                 if (opcion && opcion.hasChildNodes() && opcion.firstChild.style.backgroundColor != color) {
                     const nextCell = $('#' + direction(position, dir, 2))[0] 
-                    markCap(nextCell)
                     mvCap(opcion,nextCell)
                     if (nextCell && !nextCell.hasChildNodes()) {
                         cont +=1
+                        markCap(nextCell)
                     }
                 }
             });
@@ -173,9 +170,7 @@ function capture(target) {
                 }           
             }
         }
-
-        checkAround(cord)
-
+        
     }
 }
 
