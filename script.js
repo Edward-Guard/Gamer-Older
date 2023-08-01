@@ -51,10 +51,12 @@ makeBoard();
 start()
 
 //Remover elemento selecionado
-function rmSelected(selected) {
-    selected.classList.remove('selected')
+function rmSelected() {
+    const selected = $(".selected")[0]
     const mvSelected = document.getElementsByClassName('movs');
     const capSelected = document.getElementsByClassName('capture')
+    
+    selected.classList.remove('selected')
     if (length in mvSelected) {
         for (let i = 0; i <= mvSelected.length; i += 1) {
             mvSelected[0].classList.remove('movs')
@@ -115,54 +117,56 @@ function moves(position, color, dama) {
     //5,0 => 4,1
 }
 
-function capture(position, color, target) {
-    const directions = ['a', 'b', 'c', 'd']
+function capture(target) {
     const selected = $(".selected")[0]
+    if (selected) {
+        const color = selected.style.backgroundColor
+        const cord = selected.parentElement.id.split('-').map(Number)
+        const directions = ['a', 'b', 'c', 'd']
+        console.log(cord);
 
-    directions.forEach(element => {
-        const direcao = $('#' + direction(position, element, 1))[0]
-        if (direcao && direcao.hasChildNodes() && direcao.firstChild.style.backgroundColor != color ) {
-
-            const capturePosition = $('#' + direction(position, element, 2))[0]
-            if (!capturePosition.hasChildNodes()) {
-                capturePosition.classList.add('capture');
+        directions.forEach(element => {
+            const direcao = $('#' + direction(cord, element, 1))[0]
+            if (direcao && direcao.hasChildNodes() && direcao.firstChild.style.backgroundColor != color ) {
+                const capturePosition = $('#' + direction(cord, element, 2))[0]
+                /*
+                if (capturePosition && !capturePosition.hasChildNodes()) {
+                    capturePosition.classList.add('capture');
+                }
+                //move
+                if (target && target == capturePosition && !target.hasChildNodes()) {
+                    direcao.innerHTML = '';
+                    capturePosition.appendChild(selected)  
+                }
+                */
             }
-
-            if (target == capturePosition && !target.hasChildNodes()) {
-                direcao.innerHTML = '';
-                capturePosition.appendChild(selected)
-                rmSelected(selected)
-            }
-        }
-    });
+        });
+    }
 }
 
 function select(e) {
     let alvo = e.target
-    const selected = document.querySelector(' .selected')
+    const selected = $(".selected")[0]
 
     //Escolher a pedra
     if (alvo.tagName === 'P') {
         const cell = alvo.parentElement.id.split('-').map(Number);
         if (selected) {
-            rmSelected(selected)
+            rmSelected()
             if (selected != alvo) {
                 alvo.classList.add('selected')
                 moves(cell, alvo.style.backgroundColor).forEach(e => {
                     e.classList.toggle('movs')
                 });
-                capture(cell, alvo.style.backgroundColor)
+                capture()
             }
-
         } else {
             alvo.classList.add('selected')
             moves(cell, alvo.style.backgroundColor).forEach(Element => {
                 Element.classList.toggle('movs')
             });
-            capture(cell, alvo.style.backgroundColor)
-
+            capture()
         }
-
     } else if (alvo.tagName === 'DIV') { //Movimento
         if (selected) {
             const cellSelected = selected.parentElement.id.split('-').map(Number)
@@ -171,16 +175,11 @@ function select(e) {
             b.forEach(element => {
                 if (element.id == alvo.id) {
                     document.getElementById(alvo.id).appendChild(selected)
-                    rmSelected(selected)
+                    rmSelected()
                 }
             });
-            capture(cellSelected, selected.style.backgroundColor, alvo)
+            capture(alvo)
         }
     }
-    //Captura
-
 }
-
-
-
 board.addEventListener('click', select)
