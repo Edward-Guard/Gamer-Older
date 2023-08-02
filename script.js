@@ -42,15 +42,15 @@ function makeBoard() {
 function start() {
     const house = document.getElementById('board').children
     let count = 0
-    for (let i = 0; i < 64; i += 1) {
-        if (i < 24 && house[i].style.backgroundColor == 'black') {
+    for (let i = 1; i < 64; i += 1) {
+        if (i < 25 && house[i].style.backgroundColor == 'black') {
             count += 1
             house[i].appendChild(makePiece(`b${count}`, color2))
         }
         if (i == 40) {
             count = 0
         }
-        if (i > 39 && house[i].style.backgroundColor == 'black') {
+        if (i > 40 && house[i].style.backgroundColor == 'black') {
             count += 1
             house[i].appendChild(makePiece(`w${count}`, color1))
         }
@@ -164,8 +164,9 @@ function capture(target) {
                 }           
             }
         }
-        
+          
     }
+    
 }
 
 //Lógica de seleção de peça e direção do movimento
@@ -176,6 +177,7 @@ function select(e) {
     const turnPlayer = $("#turn").parent().get(0).style.backgroundColor
     const ownerPiece = turnPlayer == alvo.style.backgroundColor
     
+    countMoviments(e)
     
 
     //Escolher a pedra
@@ -265,4 +267,50 @@ function winner(){
     
 }
 
+
+function countMoviments(e){
+    /*
+    1-Escolher uma pç, checar se 
+    
+    */ 
+
+    const player = $('#turn').parent().css('backgroundColor');
+    const pcsCount = $('.piece').filter(function() {
+        return $(this).css('backgroundColor') === player;
+      });
+    
+    const nMove = pcsCount.map(function(){
+        let a = this.parentElement.id.split('-').map(Number)
+        let b = this.style.backgroundColor
+        let c = this.classList.contains('dame')
+        return moves(a,b,c) 
+    })
+
+    const caps = pcsCount.map(function(){
+        let a = this.parentElement.id.split('-').map(Number)
+        let b = this.style.backgroundColor 
+        return checkCap(a,b)
+    })
+    //const nCap =caps.get().reduce((a,b)=> a+b,0)
+    
+
+   //console.log(`Movimentos: ${nMove.length}|Capturas: ${nCap}`);
+   console.log(nMove);
+}
+
 board.addEventListener('click', select)
+
+function checkCap(position,color) {
+    const capturas = []
+    const directions = ['a', 'b', 'c', 'd']
+    directions.forEach(dir => {
+        const option = $('#' + direction(position, dir, 1))[0];
+        if (option && option.hasChildNodes() && option.firstChild.style.backgroundColor != color) {  
+            const nextCell = $('#' + direction(position, dir, 2))[0]
+            if (nextCell && !nextCell.hasChildNodes()) {
+                capturas.push(nextCell)
+            }
+        }
+    });
+    return capturas
+}
