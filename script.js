@@ -65,7 +65,7 @@ function rmSelected() {
     rmMarkeds()
     
 }
-function rmMarkeds() {  
+function rmMarkeds() { 
     $('.movs').removeClass('movs');
     $('.capture').removeClass('capture');
 }
@@ -149,6 +149,10 @@ function capture(target) {
         function mvCap(opcion,nextCell) {
             if(target && target == nextCell && !target.hasChildNodes()){
                 opcion.innerHTML = '';
+                const score = $('#turn').prev().children().text() 
+                $('#turn').prev().children().text(Number(score)+1)
+
+
                 nextCell.appendChild(selected)
                 const NCord= target.id.split('-').map(Number)
                 if (checkAround(NCord) != 0) {
@@ -230,6 +234,7 @@ function changePlayer(){
     }else{
        player1.append(turnPlayer)
     }
+    winner()
 }
 
 function promotion() {
@@ -238,16 +243,26 @@ function promotion() {
     const selected = $(".selected")
     const house = selected.parent().hasClass('p1')
     const house2 = selected.parent().hasClass('p2')
-    
-
     const peça = selected.css('backgroundColor')
-    console.log(peça);
+
     if( peça == color1 && house && !selected.hasClass('dame')){
         $('.selected').addClass('dame');
     }
     if (peça == color2 && house2 && !selected.hasClass('dame')) {
         $('.selected').addClass('dame');
     }
-} 
+}
+
+function winner(){
+    const score1 = $('#score1').text()
+    const score2 = $('#score2').text()
+   
+    if (score1 == 12) {
+        $('#result').text('Jogador 1 Venceu!').removeClass('ocult');
+    }else if(score2 == 12){
+        $('#result').text('Jogador 2 Venceu!').removeClass('ocult');
+    }
+    
+}
 
 board.addEventListener('click', select)

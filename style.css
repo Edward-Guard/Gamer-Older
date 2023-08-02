@@ -1,5 +1,4 @@
 #board{
-    background-color: blanchedalmond;
     width: 640px;
     height: auto;
     display: grid;
@@ -76,7 +75,7 @@
     display: flex;
     flex-direction: row;
     background-color: antiquewhite;
-    width: 210px;
+    width: 245px;
 }
 
 .dame{
@@ -86,4 +85,18 @@
 
 .selected{
     border: 3px solid red;
+}
+
+#result{
+    position: absolute;
+    top: 35%;
+    left: 20%;
+    background-color: white;
+    border: 2px goldenrod solid;
+    color: goldenrod;
+}
+
+.ocult{
+    display: none;
+    
 }
