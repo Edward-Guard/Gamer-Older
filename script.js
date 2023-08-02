@@ -6,9 +6,9 @@ $(".player-1").get(0).style.backgroundColor = 'white'
 $(".player-2").get(0).style.backgroundColor = 'rgb(110, 122, 219)'
 
 //Geradoras
-function makeCells(position, color) {
+function makeCells(position, color, promotion) {
     const cell = document.createElement('div');
-    cell.className = 'square'
+    cell.className = `square ${promotion}`
     cell.style.backgroundColor = color
     cell.id = position
     return cell
@@ -31,7 +31,11 @@ function makeBoard() {
         for (let l = 0; l < 8; l += 1) {
             (cor == 'white') ? cor = 'black' : cor = 'white';
             id = (`${i}-${l}`);
-            board.appendChild(makeCells(id, cor))
+            let promotion = ''
+            if (i == 0) {promotion = 'p1'}
+            if (i == 7) {promotion = 'p2'}
+
+            board.appendChild(makeCells(id, cor, promotion))
         }
     }
 }
@@ -59,9 +63,10 @@ start()
 
 //Remover elemento selecionado
 function rmSelected() {
-    const selected = $(".selected")[0]
-    selected.classList.remove('selected')
+    promotion()
+    $(".selected").removeClass('selected');
     rmMarkeds()
+    
 }
 function rmMarkeds() {  
     $('.movs').removeClass('movs');
@@ -230,5 +235,13 @@ function changePlayer(){
     }
 }
 
+function promotion() {
+    //Peça branca chegar a linha 0
+    //Peça azul chegar a linha 7
+    const selected = $(".selected")
+    const house = selected.parent().hasClass('p1')
+    console.log(selected);
+    console.log(house);
+}
 
 board.addEventListener('click', select)
