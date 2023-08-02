@@ -1,9 +1,9 @@
 const board = document.getElementById('board')
-const color2 = 'rgb(110, 122, 219)'
-const color1 = 'white'
+const color2 = 'rgb(110, 122, 219)' //Azul
+const color1 = 'rgb(255, 255, 255)' //Branco
 
-$(".player-1").get(0).style.backgroundColor = 'white'
-$(".player-2").get(0).style.backgroundColor = 'rgb(110, 122, 219)'
+$(".player-1").get(0).style.backgroundColor = color1
+$(".player-2").get(0).style.backgroundColor = color2
 
 //Geradoras
 function makeCells(position, color, promotion) {
@@ -55,15 +55,12 @@ function start() {
             house[i].appendChild(makePiece(`w${count}`, color1))
         }
     }
-    $('#w12').addClass('dame');
-    $('#b12').addClass('dame');
 }
 makeBoard();
 start()
 
 //Remover elemento selecionado
 function rmSelected() {
-    promotion()
     $(".selected").removeClass('selected');
     rmMarkeds()
     
@@ -96,7 +93,6 @@ function moves(position, color, dama) {
     //a = cell b = corPeça c= ?Dama
     const possibilites = [];
     const directions = [];
-    console.log(dama);
 
     if (dama) {
         directions.push('a', 'b', 'c', 'd')
@@ -158,9 +154,9 @@ function capture(target) {
                 if (checkAround(NCord) != 0) {
                     rmMarkeds()
                     checkAround(NCord)
-                }else{
+                }else{ 
                     changePlayer()
-                    rmSelected()
+                    rmSelected()   
                 }           
             }
         }
@@ -224,6 +220,7 @@ function select(e) {
 }
 
 function changePlayer(){
+    promotion()
     const turnPlayer = $("#turn")
     const player1 = $('.player-1')
     const player2 = $('.player-2')
@@ -240,8 +237,17 @@ function promotion() {
     //Peça azul chegar a linha 7
     const selected = $(".selected")
     const house = selected.parent().hasClass('p1')
-    console.log(selected);
-    console.log(house);
-}
+    const house2 = selected.parent().hasClass('p2')
+    
+
+    const peça = selected.css('backgroundColor')
+    console.log(peça);
+    if( peça == color1 && house && !selected.hasClass('dame')){
+        $('.selected').addClass('dame');
+    }
+    if (peça == color2 && house2 && !selected.hasClass('dame')) {
+        $('.selected').addClass('dame');
+    }
+} 
 
 board.addEventListener('click', select)
