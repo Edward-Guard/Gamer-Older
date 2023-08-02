@@ -1,4 +1,10 @@
 const board = document.getElementById('board')
+const color2 = 'rgb(110, 122, 219)'
+const color1 = 'white'
+
+$(".player-1").get(0).style.backgroundColor = 'white'
+$(".player-2").get(0).style.backgroundColor = 'rgb(110, 122, 219)'
+
 //Geradoras
 function makeCells(position, color) {
     const cell = document.createElement('div');
@@ -35,17 +41,18 @@ function start() {
     for (let i = 0; i < 64; i += 1) {
         if (i < 24 && house[i].style.backgroundColor == 'black') {
             count += 1
-            house[i].appendChild(makePiece(`b${count}`, 'blue'))
+            house[i].appendChild(makePiece(`b${count}`, color2))
         }
         if (i == 40) {
             count = 0
         }
         if (i > 39 && house[i].style.backgroundColor == 'black') {
             count += 1
-            house[i].appendChild(makePiece(`w${count}`, 'white'))
+            house[i].appendChild(makePiece(`w${count}`, color1))
         }
     }
     $('#w12').addClass('dame');
+    $('#b12').addClass('dame');
 }
 makeBoard();
 start()
@@ -56,20 +63,9 @@ function rmSelected() {
     selected.classList.remove('selected')
     rmMarkeds()
 }
-function rmMarkeds() {
-    const mvSelected = document.getElementsByClassName('movs');
-    const capSelected = document.getElementsByClassName('capture')
-
-    if (length in mvSelected) {
-        for (let i = 0; i <= mvSelected.length; i += 1) {
-            mvSelected[0].classList.remove('movs')
-        }
-    }
-    if (length in capSelected) {
-        for (let i = 0; i <= capSelected.length; i += 1) {
-            capSelected[0].classList.remove('capture')
-        }
-    }
+function rmMarkeds() {  
+    $('.movs').removeClass('movs');
+    $('.capture').removeClass('capture');
 }
 
 //Lógica de movimentação
@@ -95,13 +91,14 @@ function moves(position, color, dama) {
     //a = cell b = corPeça c= ?Dama
     const possibilites = [];
     const directions = [];
+    console.log(dama);
 
-    if (color == 'blue') {
-        directions.push('a', 'b')
-    } else if (color == 'white') {
-        directions.push('c', 'd')
-    } else if (dama) {
+    if (dama) {
         directions.push('a', 'b', 'c', 'd')
+    } else if(color == color2) {
+        directions.push('a', 'b')
+    } else if (color == color1) {
+        directions.push('c', 'd')
     }
 
     for (let i = 0; i < directions.length; i += 1) {
@@ -171,8 +168,10 @@ function select(e) {
     
     let alvo = e.target
     const selected = $(".selected")[0]
-    const turnPlayer = $("#turn").parent().get(0).id
+    const turnPlayer = $("#turn").parent().get(0).style.backgroundColor
     const ownerPiece = turnPlayer == alvo.style.backgroundColor
+    
+    
 
     //Escolher a pedra
     if (alvo.tagName === 'P' && ownerPiece) {
@@ -181,8 +180,10 @@ function select(e) {
         if (selected) {
             rmSelected()
             if (selected != alvo) {
-                alvo.classList.add('selected')
-                moves(cell, alvo.style.backgroundColor).forEach(e => {
+                alvo.classList.add('selected');
+                const dame = $(".selected").hasClass('dame');
+
+                moves(cell, alvo.style.backgroundColor,dame).forEach(e => {
                     e.classList.toggle('movs')
                 });
                 capture()
@@ -190,15 +191,19 @@ function select(e) {
             }
         } else {
             alvo.classList.add('selected')
-            moves(cell, alvo.style.backgroundColor).forEach(e => {
+            const dame = $(".selected").hasClass('dame')
+
+            moves(cell, alvo.style.backgroundColor,dame).forEach(e => {
                 e.classList.toggle('movs')
             });
             capture()
         }
     } else if (alvo.tagName === 'DIV') { //Movimento
         if (selected) {
+            const dame = $(".selected").hasClass('dame')
+
             const cellSelected = selected.parentElement.id.split('-').map(Number)
-            const b = moves(cellSelected, selected.style.backgroundColor)
+            const b = moves(cellSelected, selected.style.backgroundColor,dame)
 
             b.forEach(element => {
                 if (element.id == alvo.id && $("#"+element.id).hasClass('movs')) {
@@ -223,7 +228,6 @@ function changePlayer(){
     }else{
        player1.append(turnPlayer)
     }
-    console.log('Troca');
 }
 
 

@@ -4,7 +4,7 @@ Próximas tarefas
 3-Não mostrar como movimento válido se a casa pretendida tiver uma outra peça.OK
 4-Criar uma lógica de captura caso haja uma peça inimiga na casa que serve de opção e um espaço vazio adjacente.ok
 5-Resetar as opções e ou remover o selected após movimentar a peça. ok
-6-Habilitar a 'troca' de jogadores e só permitir selecionar a peça com a cor do jogador da vez.
+6-Habilitar a 'troca' de jogadores e só permitir selecionar a peça com a cor do jogador da vez. ok
 7-Marcar a pontuação.
 8-Habilitar a aquisição de uma 'dama'.
 9-Fim de jogo se o jogador da vez não puder fazer mais movimentos,se não possuir mais peças ou condições especiais.

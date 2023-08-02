@@ -32,10 +32,6 @@
     border: 2px solid gold;
 }
 
-.selected{
-    border: 3px solid red;
-}
-
 .capture{
     border: 2px solid orangered;
 }
@@ -43,7 +39,6 @@
 .player-1{
     display: flex;
     border: black 2px solid;
-    background-color: white;
 }
 .player-1,.player-2{
     display: flex;
@@ -65,8 +60,6 @@
 .player-2{
     
     border: blue 2px solid;
-    
-    background-color: blue;
     color: white;
     flex-grow: 1;
     
@@ -87,7 +80,10 @@
 }
 
 .dame{
-    border: 3px solid gold;
     background-image: url(https://img.icons8.com/?size=512&id=22898&format=png);
     background-size: contain;
+}
+
+.selected{
+    border: 3px solid red;
 }
