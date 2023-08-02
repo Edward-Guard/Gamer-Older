@@ -7,7 +7,7 @@ Próximas tarefas
 6-Habilitar a 'troca' de jogadores e só permitir selecionar a peça com a cor do jogador da vez. ok
 7-Marcar a pontuação. ok
 8-Habilitar a aquisição de uma 'dama'.ok
-9-Fim de jogo se o jogador da vez não puder fazer mais movimentos,se não possuir mais peças ou condições especiais.
+9-Fim de jogo se o jogador da vez não puder fazer mais movimentos,se não possuir mais peças ou condições especiais. 70%
 10-2 Bugs achados
   10.1-Ao ter mais de uma opção de captura,caso faça uma a outra permanece marcada. sumiu???
   10.2-Ao iniciar uma captura sequencial e não finalizar, o jogador pode selecionar novamente a peça e fazer movimento com outra.

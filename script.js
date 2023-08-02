@@ -32,8 +32,8 @@ function makeBoard() {
             (cor == 'white') ? cor = 'black' : cor = 'white';
             id = (`${i}-${l}`);
             let promotion = ''
-            if (i == 0) {promotion = 'p1'}
-            if (i == 7) {promotion = 'p2'}
+            if (i == 0) { promotion = 'p1' }
+            if (i == 7) { promotion = 'p2' }
 
             board.appendChild(makeCells(id, cor, promotion))
         }
@@ -63,9 +63,9 @@ start()
 function rmSelected() {
     $(".selected").removeClass('selected');
     rmMarkeds()
-    
+
 }
-function rmMarkeds() { 
+function rmMarkeds() {
     $('.movs').removeClass('movs');
     $('.capture').removeClass('capture');
 }
@@ -96,7 +96,7 @@ function moves(position, color, dama) {
 
     if (dama) {
         directions.push('a', 'b', 'c', 'd')
-    } else if(color == color2) {
+    } else if (color == color2) {
         directions.push('a', 'b')
     } else if (color == color1) {
         directions.push('c', 'd')
@@ -125,9 +125,9 @@ function capture(target) {
         const cord = selected.parentElement.id.split('-').map(Number)
         const directions = ['a', 'b', 'c', 'd']
         checkAround(cord)
-        
+
         function markCap(cell) {
-                cell.classList.add('capture');
+            cell.classList.add('capture');
         }
 
         function checkAround(position) {
@@ -135,54 +135,51 @@ function capture(target) {
             directions.forEach(dir => {
                 const opcion = $('#' + direction(position, dir, 1))[0];
                 if (opcion && opcion.hasChildNodes() && opcion.firstChild.style.backgroundColor != color) {
-                    const nextCell = $('#' + direction(position, dir, 2))[0] 
-                    mvCap(opcion,nextCell)
+                    const nextCell = $('#' + direction(position, dir, 2))[0]
+                    mvCap(opcion, nextCell)
                     if (nextCell && !nextCell.hasChildNodes()) {
-                        cont +=1
+                        cont += 1
                         markCap(nextCell)
                     }
                 }
             });
             return cont
         }
-        
-        function mvCap(opcion,nextCell) {
-            if(target && target == nextCell && !target.hasChildNodes()){
+
+        function mvCap(opcion, nextCell) {
+            if (target && target == nextCell && !target.hasChildNodes()) {
                 opcion.innerHTML = '';
-                const score = $('#turn').prev().children().text() 
-                $('#turn').prev().children().text(Number(score)+1)
+                const score = $('#turn').prev().children().text()
+                $('#turn').prev().children().text(Number(score) + 1)
 
 
                 nextCell.appendChild(selected)
-                const NCord= target.id.split('-').map(Number)
+                const NCord = target.id.split('-').map(Number)
                 if (checkAround(NCord) != 0) {
                     rmMarkeds()
                     checkAround(NCord)
-                }else{ 
+                } else {
                     changePlayer()
-                    rmSelected()   
-                }           
+                    rmSelected()
+                }
             }
         }
-          
+
     }
-    
+
 }
 
 //Lógica de seleção de peça e direção do movimento
 function select(e) {
-    
+
     let alvo = e.target
     const selected = $(".selected")[0]
     const turnPlayer = $("#turn").parent().get(0).style.backgroundColor
     const ownerPiece = turnPlayer == alvo.style.backgroundColor
-    
-    countMoviments(e)
-    
 
     //Escolher a pedra
     if (alvo.tagName === 'P' && ownerPiece) {
-    
+
         const cell = alvo.parentElement.id.split('-').map(Number);
         if (selected) {
             rmSelected()
@@ -190,7 +187,7 @@ function select(e) {
                 alvo.classList.add('selected');
                 const dame = $(".selected").hasClass('dame');
 
-                moves(cell, alvo.style.backgroundColor,dame).forEach(e => {
+                moves(cell, alvo.style.backgroundColor, dame).forEach(e => {
                     e.classList.toggle('movs')
                 });
                 capture()
@@ -200,7 +197,7 @@ function select(e) {
             alvo.classList.add('selected')
             const dame = $(".selected").hasClass('dame')
 
-            moves(cell, alvo.style.backgroundColor,dame).forEach(e => {
+            moves(cell, alvo.style.backgroundColor, dame).forEach(e => {
                 e.classList.toggle('movs')
             });
             capture()
@@ -210,31 +207,31 @@ function select(e) {
             const dame = $(".selected").hasClass('dame')
 
             const cellSelected = selected.parentElement.id.split('-').map(Number)
-            const b = moves(cellSelected, selected.style.backgroundColor,dame)
+            const b = moves(cellSelected, selected.style.backgroundColor, dame)
 
             b.forEach(element => {
-                if (element.id == alvo.id && $("#"+element.id).hasClass('movs')) {
+                if (element.id == alvo.id && $("#" + element.id).hasClass('movs')) {
                     document.getElementById(alvo.id).appendChild(selected)
                     changePlayer()
-                    rmSelected()                
+                    rmSelected()
                 }
             });
             capture(alvo)
-            
+
         }
     }
 }
 
-function changePlayer(){
+function changePlayer() {
     promotion()
     const turnPlayer = $("#turn")
     const player1 = $('.player-1')
     const player2 = $('.player-2')
 
     if (player1.get(0) == turnPlayer.parent().get(0)) {
-       player2.append(turnPlayer)
-    }else{
-       player1.append(turnPlayer)
+        player2.append(turnPlayer)
+    } else {
+        player1.append(turnPlayer)
     }
     winner()
 }
@@ -247,7 +244,7 @@ function promotion() {
     const house2 = selected.parent().hasClass('p2')
     const peça = selected.css('backgroundColor')
 
-    if( peça == color1 && house && !selected.hasClass('dame')){
+    if (peça == color1 && house && !selected.hasClass('dame')) {
         $('.selected').addClass('dame');
     }
     if (peça == color2 && house2 && !selected.hasClass('dame')) {
@@ -255,57 +252,45 @@ function promotion() {
     }
 }
 
-function winner(){
-    const score1 = $('#score1').text()
-    const score2 = $('#score2').text()
-   
-    if (score1 == 12) {
+function winner() {
+    const movs1 = countMoviments(color1)
+    const movs2 = countMoviments(color2)
+
+    if (movs2 == 0) {
         $('#result').text('Jogador 1 Venceu!').removeClass('ocult');
-    }else if(score2 == 12){
+    } else if (movs1 == 0) {
         $('#result').text('Jogador 2 Venceu!').removeClass('ocult');
     }
-    
+
 }
 
 
-function countMoviments(e){
-    /*
-    1-Escolher uma pç, checar se 
-    
-    */ 
-
-    const player = $('#turn').parent().css('backgroundColor');
-    const pcsCount = $('.piece').filter(function() {
-        return $(this).css('backgroundColor') === player;
-      });
-    
-    const nMove = pcsCount.map(function(){
-        let a = this.parentElement.id.split('-').map(Number)
-        let b = this.style.backgroundColor
-        let c = this.classList.contains('dame')
-        return moves(a,b,c) 
+function countMoviments(color) {
+    const peao = $('.piece').filter(function () {
+        return $(this).css('backgroundColor') === color
     })
 
-    const caps = pcsCount.map(function(){
-        let a = this.parentElement.id.split('-').map(Number)
-        let b = this.style.backgroundColor 
-        return checkCap(a,b)
-    })
-    //const nCap =caps.get().reduce((a,b)=> a+b,0)
-    
+    const moviment = [0];
+    $.each(peao, function vl(i, val) {
+        const pos = val.parentElement.id.split('-').map(Number)
+        const cor = val.style.backgroundColor
+        const dame = val.classList.contains('dame')
 
-   //console.log(`Movimentos: ${nMove.length}|Capturas: ${nCap}`);
-   console.log(nMove);
+        moviment.push(checkCap(pos, cor).length)
+        moviment.push(moves(pos, cor, dame).length)
+    })
+    const nMovs = moviment.reduce((a, b) => a + b)
+    return nMovs
 }
 
 board.addEventListener('click', select)
 
-function checkCap(position,color) {
+function checkCap(position, color) {
     const capturas = []
     const directions = ['a', 'b', 'c', 'd']
     directions.forEach(dir => {
         const option = $('#' + direction(position, dir, 1))[0];
-        if (option && option.hasChildNodes() && option.firstChild.style.backgroundColor != color) {  
+        if (option && option.hasChildNodes() && option.firstChild.style.backgroundColor != color) {
             const nextCell = $('#' + direction(position, dir, 2))[0]
             if (nextCell && !nextCell.hasChildNodes()) {
                 capturas.push(nextCell)
@@ -314,3 +299,6 @@ function checkCap(position,color) {
     });
     return capturas
 }
+
+const btnTeste = $('#tst').get(0)
+btnTeste.addEventListener('click', countMoviments)
