@@ -4,6 +4,8 @@
     display: grid;
     grid-template-columns: repeat(8,80px);
     grid-template-rows: repeat(8,80px);
+    background-color: antiquewhite;
+    border: 1px solid black;
 }
 
 .square{
@@ -48,7 +50,7 @@
     flex-grow: 1;
 }
 
-.play{
+.playO{
     padding: 10px;
     height: auto;
     margin: 0;
@@ -71,11 +73,11 @@
     margin-right:5px;
 }
 
-.container{
+.jogadores{
     display: flex;
     flex-direction: row;
     background-color: antiquewhite;
-    width: 245px;
+    width: 250px;
 }
 
 .dame{
@@ -100,3 +102,39 @@
     display: none;
     
 }
+
+.t0{
+    background-color: beige;
+    width: 840px;
+    height: 735px;
+    
+
+}
+
+.t1{
+    border: 1px solid black;
+    
+}
+
+.t2{
+    border: 1px solid black;
+    
+}
+
+.board{
+    height: 670px;
+    width: 670px;
+}
+
+.anexos{
+    width: 170px;
+}
+
+.content{
+    width: 670px;
+}
+.contador{
+    height: 65px;
+    width: auto;
+}
+

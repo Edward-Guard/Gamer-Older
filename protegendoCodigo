@@ -1,0 +1,13 @@
+<!-- <div id="board">
+        <h1 id="result" class="ocult">Jogador X venceu!</h1>
+    </div>
+    
+    <div class="jogadores">
+        <div id="white" class="player-1">
+            <span class="playO"><span id="score1">0</span>-Jogador 1</span>
+            <div id="turn"></div>
+        </div>
+        <div id="blue" class="player-2">
+            <span class="playO"><span id="score2">0</span>-Jogador 2</span>
+        </div>
+    </div> -->
