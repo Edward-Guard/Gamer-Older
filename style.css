@@ -1,17 +1,22 @@
+:root{
+    --color1:rgba(216, 165, 121, 1);
+    --color2:rgba(242, 198, 159, 1);/*Ladrilho claro*/
+    --color4:rgb(140, 85, 53); /*Pç escura*/
+    --color4:rgba(191, 130, 95, 1);
+    --color5:rgba(63, 48, 38, 1); /*Ladrilho escuro*/
+}
+
 #board{
     width: 640px;
     height: auto;
     display: grid;
     grid-template-columns: repeat(8,80px);
     grid-template-rows: repeat(8,80px);
-    background-color: antiquewhite;
-    border: 1px solid black;
+    border: 1px solid black
 }
 
 .square{
-    background-color: white;
-    border: 1px solid black;
-    
+    border: 1px solid transparent;    
 }
 
 .white{
@@ -37,34 +42,6 @@
     border: 2px solid orangered;
 }
 
-.player-1{
-    display: flex;
-    border: black 2px solid;
-}
-.player-1,.player-2{
-    display: flex;
-    border-radius: 18px;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: hidden;
-    flex-grow: 1;
-}
-
-.playO{
-    padding: 10px;
-    height: auto;
-    margin: 0;
-    text-align: center;
-    flex-grow: 1;
-}
-
-.player-2{
-    
-    border: blue 2px solid;
-    color: white;
-    flex-grow: 1;
-    
-}
 #turn{
     background-color: goldenrod;
     border-radius: 100%;
@@ -121,22 +98,8 @@
     
 }
 
-.board{
-    height: 670px;
-    width: 670px;
-    padding: 10px;
-}
-
 .anexos{
     width: 170px;
-}
-
-.content{
-    width: 670px;
-}
-.contador{
-    height: 50px;
-    width: auto;
 }
 
 .relogio{
@@ -154,65 +117,74 @@
 
 }
 
-.time{
+#time1, #time2{
     display: flex;
     flex-direction: row;
     color: white;
     padding-inline: 15px;
     font-size: 25px;
-}
-#time1{
-    background-color: antiquewhite; /*Remover as cores e as bordas posteriormente*/
-    border: 2px solid black;
 
 }
-#time2{
-    background-color: cornflowerblue;
-    border: 2px solid black;
+
+#time2.turn{
+    background-color: blue;
 }
 
-#tabuleiro{
-    background-color: brown;
-    width: 640px;
-    height: 640px;
+.pContent{
+    
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    display: grid;
+    height: 700px;
+    width: 700px;
+    grid-template: 
+    "navT navT navT" 20px
+    "navL board navR"640px   
+    "navB navB navB"20px
+    /20px 640px 20px
+    ;
 }
-.line{
+.asCt{
+    background-color: grey;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    justify-content: space-between;
+    display: flex;
+}
+.navR, .navL{
+    padding: 20px 0px;
+    flex-direction: column;
+}
+.navT,.navB{
+    flex-direction: row;
+    padding: 0px 50px;
+}
+.navT{
+    grid-area: navT;
     display: flex;
     flex-direction: row;
 }
-.colu{
+.navL{
+    grid-area: navL;
     display: flex;
-    flex-direction: column;
+}
+.board{
+    grid-area: board;
+    background-color: bisque;
+}
+.navR{
+    grid-area: navR;
+}
+ul.navR li,ul.navT li{
+    transform: scaleY(-1);
+}
+.navB{
+    grid-area: navB;
 }
 
-.cordE , .cordD{
-    list-style: none;
-    background-color: white;
-    width: 18px;
+.nav2{
     display: flex;
-    flex-direction: column;
-    height: 640px;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    align-self: flex-start;
-}
-.cordD{
-    background-color: white;
-    flex-direction: column-reverse;
-}
-
-.cordT{
-    list-style: none;
-    background-color: white;
-    height: 18px;
-    display: flex;
-    flex-direction: row;
-    width: 640px;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    align-self: flex-start;
+    flex-direction: row-reverse;
 }

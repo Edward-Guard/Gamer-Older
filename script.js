@@ -1,9 +1,12 @@
 const board = document.getElementById('board')
-const color2 = 'rgb(110, 122, 219)' //Azul
-const color1 = 'rgb(255, 255, 255)' //Branco
+const color2 = 'rgb(140, 85, 53)' //Azul
+const color1 = 'rgb(216, 165, 121)' //Branco
+const color3 = 'rgb(242, 198, 159)' //Ladrilho claro
+const color4 = 'rgb(63, 48, 38)'//Madeira Escura
 
-$(".player-1").get(0).style.backgroundColor = color1
-$(".player-2").get(0).style.backgroundColor = color2
+
+
+
 
 //Geradoras
 function makeCells(position, color, promotion) {
@@ -24,12 +27,12 @@ function makePiece(id, color) {
 
 function makeBoard() {
     let id = '0';
-    let cor = 'white'
+    let cor = color3
     for (let i = 0; i < 8; i += 1) {
-        (cor == 'white') ? cor = 'black' : cor = 'white';
+        (cor == color3) ? cor = color4 : cor = color3;
         id = i;
         for (let l = 0; l < 8; l += 1) {
-            (cor == 'white') ? cor = 'black' : cor = 'white';
+            (cor == color3) ? cor = color4 : cor = color3;
             id = (`${i}-${l}`);
             let promotion = ''
             if (i == 0) { promotion = 'p1' }
@@ -40,17 +43,18 @@ function makeBoard() {
     }
 }
 function start() {
+    
     const house = document.getElementById('board').children
     let count = 0
     for (let i = 1; i < 64; i += 1) {
-        if (i < 25 && house[i].style.backgroundColor == 'black') {
-            count += 1
+        if (i < 24 && house[i].style.backgroundColor == color4) {
+            count += 1 
             house[i].appendChild(makePiece(`b${count}`, color2))
         }
-        if (i == 40) {
+        if (i == 38) {
             count = 0
         }
-        if (i > 40 && house[i].style.backgroundColor == 'black') {
+        if (i > 39 && house[i].style.backgroundColor == color4) {
             count += 1
             house[i].appendChild(makePiece(`w${count}`, color1))
         }
@@ -174,11 +178,11 @@ function select(e) {
 
     let alvo = e.target
     const selected = $(".selected")[0]
-    const turnPlayer = $("#turn").parent().get(0).style.backgroundColor
-    const ownerPiece = turnPlayer == alvo.style.backgroundColor
+    //const turnPlayer = $("#turn").parent().get(0).style.backgroundColor
+    //const ownerPiece = turnPlayer == alvo.style.backgroundColor
 
-    //Escolher a pedra
-    if (alvo.tagName === 'P' && ownerPiece) {
+    //Escolher a pedra   /*&& ownerPiece*/
+    if (alvo.tagName === 'P') {
 
         const cell = alvo.parentElement.id.split('-').map(Number);
         if (selected) {
@@ -222,16 +226,27 @@ function select(e) {
     }
 }
 
-function changePlayer() {
-    promotion()
-    const turnPlayer = $("#turn")
-    const player1 = $('.player-1')
-    const player2 = $('.player-2')
 
-    if (player1.get(0) == turnPlayer.parent().get(0)) {
-        player2.append(turnPlayer)
+
+function changePlayer() {
+    console.log('Zero');
+    promotion()
+    const player1 = $('#time1')
+    const player2 = $('#time2')
+    //2 fnc 1-Acender a cor 2-Trocar a vez
+    //Trocar a vez - Torna o elemento aceso cinza,remove a classe turn,move para o segundo e acende a cor.
+    
+    
+
+    if (!player1.hasClass('turn')) {
+        player2.removeClass('turn');
+        player1.get(0).style.backgroundColor = color1
+        player1.addClass('turn');
+        
     } else {
-        player1.append(turnPlayer)
+        player1.removeClass('turn');
+        player2.addClass('turn');
+        player2.get(0).style.backgroundColor = color2
     }
     winner()
 }
@@ -300,5 +315,5 @@ function checkCap(position, color) {
     return capturas
 }
 
-const btnTeste = $('#tst').get(0)
-btnTeste.addEventListener('click', countMoviments)
+//const btnTeste = $('#tst').get(0)
+//btnTeste.addEventListener('click', countMoviments)
