@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game of Older(Hash)</title>
-    <link rel="stylesheet" href="style.css">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
     
     
 </head>
@@ -14,12 +15,66 @@
     <main class="container text-center">
         <div class="row  t0">
             <div class="col content t1">
-                <div class="row justify-content-center contador  t2">
-                    
-                    <i style="font-size: 40px;" class=" bi bi-stopwatch"></i>
-                    
+                <div class="row justify-content-center">   
+                    <div class="relogio">
+                        <div id="time1" class="time">
+                            00:00
+                        </div>
+                        <i class="bi bi-stopwatch" style="font-size: 28px;"></i>
+                        <div id="time2" class="time">
+                            00:00
+                        </div>
+                    </div> 
                 </div>
-                <div class="row justify-content-center board t2">Tabuleiro
+
+                <div class="row justify-content-center board t2">
+                    <div class="line">
+                        <ul class="cordT">
+                            <li>0</li>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                    </div>
+                    <div class="line">
+                        <ul class="cordE">
+                            <li >0</li>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                        <div id="tabuleiro"></div>
+                        <ul class="cordD">
+                            <li>0</li>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                    </div>
+                    <div class="line">
+                        <ul class="cordT">
+                            <li>0</li>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                        </ul>
+                    </div>
                     
                 </div>
             </div>

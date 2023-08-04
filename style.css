@@ -124,6 +124,7 @@
 .board{
     height: 670px;
     width: 670px;
+    padding: 10px;
 }
 
 .anexos{
@@ -134,7 +135,84 @@
     width: 670px;
 }
 .contador{
-    height: 65px;
+    height: 50px;
     width: auto;
 }
 
+.relogio{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 40px;
+    align-items: center;
+    border: 1px black solid;
+    width: 200px;
+    border-radius: 18px;
+    overflow: hidden;
+    background-color: grey;
+    margin-top: 10px;
+
+}
+
+.time{
+    display: flex;
+    flex-direction: row;
+    color: white;
+    padding-inline: 15px;
+    font-size: 25px;
+}
+#time1{
+    background-color: antiquewhite; /*Remover as cores e as bordas posteriormente*/
+    border: 2px solid black;
+
+}
+#time2{
+    background-color: cornflowerblue;
+    border: 2px solid black;
+}
+
+#tabuleiro{
+    background-color: brown;
+    width: 640px;
+    height: 640px;
+}
+.line{
+    display: flex;
+    flex-direction: row;
+}
+.colu{
+    display: flex;
+    flex-direction: column;
+}
+
+.cordE , .cordD{
+    list-style: none;
+    background-color: white;
+    width: 18px;
+    display: flex;
+    flex-direction: column;
+    height: 640px;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    align-self: flex-start;
+}
+.cordD{
+    background-color: white;
+    flex-direction: column-reverse;
+}
+
+.cordT{
+    list-style: none;
+    background-color: white;
+    height: 18px;
+    display: flex;
+    flex-direction: row;
+    width: 640px;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    align-self: flex-start;
+}
