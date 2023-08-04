@@ -1,7 +1,7 @@
 :root{
     --color1:rgba(216, 165, 121, 1);
     --color2:rgba(242, 198, 159, 1);/*Ladrilho claro*/
-    --color4:rgb(140, 85, 53); /*Pç escura*/
+    --color3:rgb(140, 85, 53); /*Pç escura*/
     --color4:rgba(191, 130, 95, 1);
     --color5:rgba(63, 48, 38, 1); /*Ladrilho escuro*/
 }
@@ -125,9 +125,25 @@
     font-size: 25px;
 
 }
+.change > #time1   {
+    background-color: var(--color1);
+}
 
-#time2.turn{
-    background-color: blue;
+.change > i {
+    background-color: var(--color1);
+} 
+
+i{
+    background-color: var(--color3);
+    
+}
+
+.change > #time2 {
+    background-color: grey;
+}
+
+#time2{
+    background-color: var(--color3);
 }
 
 .pContent{

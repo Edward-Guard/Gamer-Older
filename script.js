@@ -178,11 +178,13 @@ function select(e) {
 
     let alvo = e.target
     const selected = $(".selected")[0]
-    //const turnPlayer = $("#turn").parent().get(0).style.backgroundColor
-    //const ownerPiece = turnPlayer == alvo.style.backgroundColor
 
-    //Escolher a pedra   /*&& ownerPiece*/
-    if (alvo.tagName === 'P') {
+    const turnPlayer = $('.clock').css('backgroundColor')
+    const ownerPiece = turnPlayer == alvo.style.backgroundColor
+    console.log(turnPlayer);
+    console.log(alvo.style.backgroundColor);
+    console.log(ownerPiece);
+    if (alvo.tagName === 'P' && ownerPiece) {
 
         const cell = alvo.parentElement.id.split('-').map(Number);
         if (selected) {
@@ -229,24 +231,13 @@ function select(e) {
 
 
 function changePlayer() {
-    console.log('Zero');
     promotion()
-    const player1 = $('#time1')
-    const player2 = $('#time2')
-    //2 fnc 1-Acender a cor 2-Trocar a vez
-    //Trocar a vez - Torna o elemento aceso cinza,remove a classe turn,move para o segundo e acende a cor.
-    
-    
+    const clock = $('.relogio')
 
-    if (!player1.hasClass('turn')) {
-        player2.removeClass('turn');
-        player1.get(0).style.backgroundColor = color1
-        player1.addClass('turn');
-        
+    if (clock.hasClass('change')) {
+        clock.removeClass('change');   
     } else {
-        player1.removeClass('turn');
-        player2.addClass('turn');
-        player2.get(0).style.backgroundColor = color2
+        clock.addClass('change');
     }
     winner()
 }
