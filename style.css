@@ -18,21 +18,14 @@
 .square{
     border: 1px solid transparent;    
 }
-
-.white{
-    background-color: white;
-}
-.blue{
-    background-color: blue;
-}
-
 .piece{
     width: 60px;
     height: 60px;
     border-radius: 100%;
-    
     margin: auto;
     margin-top: 10px;
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.7);
+    box-shadow: inset 0px 1px 6px 1px rgba(0,0,0,9);
 }
 .movs{
     border: 2px solid gold;
@@ -40,21 +33,6 @@
 
 .capture{
     border: 2px solid orangered;
-}
-
-#turn{
-    background-color: goldenrod;
-    border-radius: 100%;
-    height: 25px;
-    width: 25px;
-    margin-right:5px;
-}
-
-.jogadores{
-    display: flex;
-    flex-direction: row;
-    background-color: antiquewhite;
-    width: 250px;
 }
 
 .dame{
@@ -66,26 +44,9 @@
     border: 3px solid red;
 }
 
-#result{
-    position: absolute;
-    top: 35%;
-    left: 20%;
-    background-color: white;
-    border: 2px goldenrod solid;
-    color: goldenrod;
-}
-
-.ocult{
-    display: none;
-    
-}
-
 .t0{
     background-color: beige;
-    width: 840px;
-    height: 735px;
-    
-
+    width: 900px;
 }
 
 .t1{
@@ -96,10 +57,6 @@
 .t2{
     border: 1px solid black;
     
-}
-
-.anexos{
-    width: 170px;
 }
 
 .relogio{
@@ -146,8 +103,7 @@ i{
     background-color: var(--color3);
 }
 
-.pContent{
-    
+.pContent{ 
     margin: 0;
     padding: 0;
     padding: 10px;
@@ -162,12 +118,14 @@ i{
     ;
 }
 .asCt{
-    background-color: grey;
+    background-color: var(--color5);
+    color: white;
     padding: 0;
     margin: 0;
     list-style: none;
-    justify-content: space-between;
     display: flex;
+    justify-content: space-between;
+
 }
 .navR, .navL{
     padding: 20px 0px;
@@ -176,15 +134,18 @@ i{
 .navT,.navB{
     flex-direction: row;
     padding: 0px 50px;
+
 }
 .navT{
     grid-area: navT;
-    display: flex;
-    flex-direction: row;
+    border: solid black;
+    border-width: 2px 2px 0px 2px;
 }
+
 .navL{
     grid-area: navL;
-    display: flex;
+    border: solid black;
+    border-width: 0px 0px 0px 2px;
 }
 .board{
     grid-area: board;
@@ -192,15 +153,50 @@ i{
 }
 .navR{
     grid-area: navR;
+    border: solid black;
+    border-width: 0px 2px 0px 0px;
 }
 ul.navR li,ul.navT li{
     transform: scaleY(-1);
 }
 .navB{
     grid-area: navB;
+    border: solid black;
+    border-width: 0px 2px 2px 2px;
+
 }
 
-.nav2{
-    display: flex;
-    flex-direction: row-reverse;
+.anexos{
+
+    height: 750px;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template: 
+    'rules'
+    'score'
+    'oldMovments'
+    /196px;
+}
+
+.rules{
+    grid-area: rules;
+}
+.score{
+
+    grid-area: score;
+}
+.oldMovments{
+    grid-area: oldMovments;
+    
+}
+
+.rulesTitle{
+    font-weight: bold;
+    font-size: 26px;
+    border: 1px solid black;
+}
+
+.ocult{
+    display: none;
 }
