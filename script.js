@@ -307,12 +307,20 @@ function drawRules() {
 function dropRules(e) {
     $('.rulesCont').slideToggle(700);
 }
+let time = 300;
+function stopwatch() {
+    //pause()
+    //const time = 
+    //60*5=>300 s = 5 minutos
 
+    //setInterval(()=>{time -= 1,console.log(time);},1000)
+}
 
 lateralBoard()
 makeBoard();
 start()
 drawRules()
+stopwatch()
 const dRules = $('.rulesTitle').get(0)
 
 board.addEventListener('click', select)

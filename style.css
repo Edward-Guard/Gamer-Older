@@ -173,8 +173,8 @@ ul.navR li,ul.navT li{
     margin: 0;
     display: grid;
     grid-template: 
-    'rules'
     'score'
+    'rules'
     'oldMovments'
     /196px;
 }
@@ -195,6 +195,14 @@ ul.navR li,ul.navT li{
     font-weight: bold;
     font-size: 26px;
     border: 1px solid black;
+}
+.scoreTitle{
+    font-weight: bold;
+    font-size: 26px;
+}
+.scoreContent{
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .ocult{
