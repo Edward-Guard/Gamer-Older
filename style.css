@@ -54,36 +54,41 @@
     
 }
 
-.t2{
-    border: 1px solid black;
-    
-}
 
 .relogio{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 40px;
-    align-items: center;
+    height: 42px;
     border: 1px black solid;
     width: 200px;
     border-radius: 18px;
     overflow: hidden;
     background-color: grey;
     margin-top: 10px;
+    
 
 }
 
 #time1, #time2{
-    display: flex;
-    flex-direction: row;
+    width: 600px;
+    display: block;
     color: white;
     padding-inline: 15px;
     font-size: 25px;
+    transition: 1s;
+    
 
+}
+#time1{
+    width: 600px;
+    display: block;
+    color: #696969;
 }
 .change > #time1   {
     background-color: var(--color1);
+    color: white;
+
 }
 
 .change > i {
@@ -92,15 +97,27 @@
 
 i{
     background-color: var(--color3);
+    transition: 1s;
     
 }
 
 .change > #time2 {
     background-color: grey;
+    color: #696969;
 }
 
 #time2{
     background-color: var(--color3);
+}
+
+.scroll{
+    transition: transform 0.8s;
+    height: 400px;
+
+}
+.scroll:hover{
+    transform: translateY(-35px)
+    
 }
 
 .pContent{ 
@@ -117,7 +134,7 @@ i{
     /20px 640px 20px
     ;
 }
-.asCt{
+.navR, .navL, .navT,.navB{
     background-color: var(--color5);
     color: white;
     padding: 0;
@@ -173,7 +190,6 @@ ul.navR li,ul.navT li{
     margin: 0;
     display: grid;
     grid-template: 
-    'score'
     'rules'
     'oldMovments'
     /196px;
@@ -181,10 +197,6 @@ ul.navR li,ul.navT li{
 
 .rules{
     grid-area: rules;
-}
-.score{
-
-    grid-area: score;
 }
 .oldMovments{
     grid-area: oldMovments;

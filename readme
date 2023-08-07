@@ -23,3 +23,8 @@ Cores madeira
 5- cor-rgba(63, 48, 38, 1)
 
 Box-shadow-Peças - 0px 3px 3px 0px rgba(0,0,0,0.7),inset 0px 1px 6px 1px rgba(0,0,0,9);
+
+Criando fliper relogio-Pontuação
+1-Container 3d h,L e Prof(perspective 1000px)
+2-Criar o elemento a ser rotacionado fliper
+3-Criar a frente e o verso desse elemento. Frente-Tempo Verso-Pontuação

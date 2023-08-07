@@ -1,5 +1,5 @@
 const board = document.getElementById('board')
-const tstFunc = $('.relogio').get(0)
+
 
 
 const color1 = 'rgb(216, 165, 121)' //Peça-1
@@ -45,12 +45,11 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         const classes = ['navT', 'navL', 'navR', 'navB'];
         const indexs = [0, 1, 2, 3, 4, 5, 6, 7]
         classes.forEach((e, i) => {
-            $('.pContent').append(`<ul class="asCt ${classes[i]}"></ul>`);
+            $('.pContent').append(`<ul class="${classes[i]}"></ul>`);
             indexs.forEach((e, j) => { $('.' + classes[i]).append(`<li>${indexs[j]}</li>`) });
         });
     }
     function start() {
-
         const house = document.getElementById('board').children
         let count = 0
         for (let i = 1; i < 64; i += 1) {
@@ -67,6 +66,7 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
             }
         }
     }
+    
 }
 //'Resets'
 {
@@ -234,13 +234,18 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
     function changePlayer() {
         promotion()
         const clock = $('.relogio')
+        let player = 'stopwatch1'
     
         if (clock.hasClass('change')) {
             clock.removeClass('change');
+            player = 'stopwatch2'
         } else {
             clock.addClass('change');
+            player = 'stopwatch1'
         }
         winner()
+        play(player)
+
     }
     function promotion() {
         //Peça branca chegar a linha 0
@@ -307,25 +312,40 @@ function drawRules() {
 function dropRules(e) {
     $('.rulesCont').slideToggle(700);
 }
-let time = 300;
-function stopwatch() {
-    //pause()
-    //const time = 
-    //60*5=>300 s = 5 minutos
 
-    //setInterval(()=>{time -= 1,console.log(time);},1000)
+let stopwatch = null
+function play(player) {
+    const cron = $('#'+player)
+    let time = cron.html().split(':').map(Number)
+    time = time[0]*60 + time[1]
+    pauseCrom()
+    
+    stopwatch =setInterval(() => {
+        time -=1
+        const min = Math.floor(time/60)
+        const sec = time%60
+        cron.html(`${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`)
+    }, 1000);
 }
+function pauseCrom(){
+    clearInterval(stopwatch)
+}
+//1-Pegar o tempo do relogio
+//2-Converter em segundos
+//3-Reduzir 1s a cada segundo
+//4-Ao trocar de 'relogio' recomeçar a contagem com o novo relógio.
 
 lateralBoard()
 makeBoard();
 start()
+play('stopwatch1')
 drawRules()
-stopwatch()
 const dRules = $('.rulesTitle').get(0)
-
+const tstFunc = $('#teste1').get(0)
+const tstFunc2 = $('#teste2').get(0)
 board.addEventListener('click', select)
 dRules.addEventListener('click', dropRules)
-//tstFunc.addEventListener('click',drawRules)
+tstFunc2.addEventListener('click',pauseCrom)
 //Caraca 280 linhas. Dava pra fazer menor?
 
 

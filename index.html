@@ -1,54 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game of Older(Hash)</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
-    
-    
+
+
 </head>
+
 <body>
     <main class="container text-center">
         <div class="row  t0">
             <div class="col content t1">
-                <div class="row justify-content-center">   
+                <div class="row justify-content-center">
                     <div class="relogio change">
-                        <div id="time1">
-                            00:00
+                        <!-- Criar um fliper aliado a um hover para mostrar a pontuação ao passar pelo relogio. -->
+                        <div class="scroll" id="time1">
+                            <div id="stopwatch1">05:00</div>
+                            <div>0</div>
                         </div>
                         <i class="clock bi bi-stopwatch" style="font-size: 28px;"></i>
-                        <div id="time2" class="turn">
-                            00:00
+                        <div class="scroll" id="time2">
+                            <div id="stopwatch2">05:00</div>
+                            <div>0</div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
-                <div class="row t2">
+                <div class="row ">
                     <div class="pContent">
-                    <div id="board" class="board"></div>
-                </div>
+                        <div id="board" class="board"></div>
+                    </div>
                 </div>
             </div>
             <aside class="col anexos">
-                    <div class="rules ocult"></div>
-                    <div class="score">
-                        <div class="scoreTitle">Pontuação</div>
-                        <div class="scoreContent">Jogador-1 <span id="score1">0</span></div>
-                        <div class="scoreContent">Jogador-2 <span id="score2">0</span></div>
-                    </div>
-                    <div class="oldMovments">Ultimos movimentos</div>
+                <div class="rules"></div>
+                <div class="oldMovments">Ultimos movimentos</div>
             </aside>
         </div>
+        <button id="teste1" type="button" class="btn btn-primary">Primary</button>
+        <button id="teste2" type="button" class="btn btn-secondary">Secondary</button>
 
     </main>
 
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
-    
+
 </body>
+
 </html>
