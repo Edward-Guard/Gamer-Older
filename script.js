@@ -1,5 +1,5 @@
 const board = document.getElementById('board')
-
+let stopwatch = null
 
 
 const color1 = 'rgb(216, 165, 121)' //Peça-1
@@ -65,8 +65,9 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
                 house[i].appendChild(makePiece(`w${count}`, color1))
             }
         }
+        play('stopwatch1')
     }
-    
+
 }
 //'Resets'
 {
@@ -92,11 +93,11 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         };
         return movements[option];
     }
-    
+
     function moves(position, color, dama) {
         const possibilites = [];
         const directions = [];
-    
+
         if (dama) {
             directions.push('a', 'b', 'c', 'd')
         } else if (color == color2) {
@@ -104,7 +105,7 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         } else if (color == color1) {
             directions.push('c', 'd')
         }
-    
+
         for (let i = 0; i < directions.length; i += 1) {
             const movement = $('#' + direction(position, directions[i], 1))[0];
             if (movement && !movement.hasChildNodes()) {
@@ -113,7 +114,7 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         }
         return possibilites
     }
-    
+
     function capture(target) {
         const selected = $(".selected")[0]
         if (selected) {
@@ -121,11 +122,11 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
             const cord = selected.parentElement.id.split('-').map(Number)
             const directions = ['a', 'b', 'c', 'd']
             checkAround(cord)
-    
+
             function markCap(cell) {
                 cell.classList.add('capture');
             }
-    
+
             function checkAround(position) {
                 let cont = 0
                 directions.forEach(dir => {
@@ -141,14 +142,11 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
                 });
                 return cont
             }
-    
+
             function mvCap(opcion, nextCell) {
                 if (target && target == nextCell && !target.hasChildNodes()) {
                     opcion.innerHTML = '';
-                    const score = $('#turn').prev().children().text()
-                    $('#turn').prev().children().text(Number(score) + 1)
-    
-    
+                    score();
                     nextCell.appendChild(selected)
                     const NCord = target.id.split('-').map(Number)
                     if (checkAround(NCord) != 0) {
@@ -160,9 +158,9 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
                     }
                 }
             }
-    
+
         }
-    
+
     }
 }
 //Regras de jogo.
@@ -171,28 +169,28 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
 
         let alvo = e.target
         const selected = $(".selected")[0]
-    
+
         const turnPlayer = $('.clock').css('backgroundColor')
         const ownerPiece = turnPlayer == alvo.style.backgroundColor
         if (alvo.tagName === 'P' && ownerPiece) {
-    
+
             const cell = alvo.parentElement.id.split('-').map(Number);
             if (selected) {
                 rmSelected()
                 if (selected != alvo) {
                     alvo.classList.add('selected');
                     const dame = $(".selected").hasClass('dame');
-    
+
                     moves(cell, alvo.style.backgroundColor, dame).forEach(e => {
                         e.classList.toggle('movs')
                     });
                     capture()
-    
+
                 }
             } else {
                 alvo.classList.add('selected')
                 const dame = $(".selected").hasClass('dame')
-    
+
                 moves(cell, alvo.style.backgroundColor, dame).forEach(e => {
                     e.classList.toggle('movs')
                 });
@@ -201,10 +199,10 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         } else if (alvo.tagName === 'DIV') { //Movimento
             if (selected) {
                 const dame = $(".selected").hasClass('dame')
-    
+
                 const cellSelected = selected.parentElement.id.split('-').map(Number)
                 const b = moves(cellSelected, selected.style.backgroundColor, dame)
-    
+
                 b.forEach(element => {
                     if (element.id == alvo.id && $("#" + element.id).hasClass('movs')) {
                         document.getElementById(alvo.id).appendChild(selected)
@@ -213,7 +211,7 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
                     }
                 });
                 capture(alvo)
-    
+
             }
         }
     }
@@ -235,7 +233,7 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         promotion()
         const clock = $('.relogio')
         let player = 'stopwatch1'
-    
+
         if (clock.hasClass('change')) {
             clock.removeClass('change');
             player = 'stopwatch2'
@@ -254,7 +252,7 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         const house = selected.parent().hasClass('p1')
         const house2 = selected.parent().hasClass('p2')
         const peça = selected.css('backgroundColor')
-    
+
         if (peça == color1 && house && !selected.hasClass('dame')) {
             $('.selected').addClass('dame');
         }
@@ -266,13 +264,13 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         const peao = $('.piece').filter(function () {
             return $(this).css('backgroundColor') === color
         })
-    
+
         const moviment = [0];
         $.each(peao, function vl(i, val) {
             const pos = val.parentElement.id.split('-').map(Number)
             const cor = val.style.backgroundColor
             const dame = val.classList.contains('dame')
-    
+
             moviment.push(checkCap(pos, cor).length)
             moviment.push(moves(pos, cor, dame).length)
         })
@@ -282,72 +280,55 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
     function winner() {
         const movs1 = countMoviments(color1)
         const movs2 = countMoviments(color2)
+
         if (movs2 == 0) {
             $('#result').text('Jogador 1 Venceu!').removeClass('ocult');
         } else if (movs1 == 0) {
             $('#result').text('Jogador 2 Venceu!').removeClass('ocult');
         }
     }
+    function play(player) {
+        let time = $('#' + player).html().split(':').map(Number)
+        time = time[0] * 60 + time[1]
+        pause()
+
+        stopwatch = setInterval(() => {
+            if (time == 0) {
+                pause()
+                console.log('Acabou');
+            } else {
+                time -= 1
+                const min = Math.floor(time / 60)
+                const sec = time % 60
+                $('#' + player).html(`${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`)
+            }
+
+        }, 1000);
+    }
+    function pause() {
+        clearInterval(stopwatch)
+    }
+    function score() {
+        const cron = $('.relogio').get(0)
+        if (cron.classList.contains('change')) {
+            const score = $('#score1').html()
+            $('#score1').html(Number(score) + 1)
+        } else {
+            const score = $('#score2').html()
+            $('#score2').html(Number(score) + 1)
+        }
+    }
 }
 //Função em implemetanção.
-function drawRules() {
-    const rulesBr = [
-        'Cada pedra anda apenas para frente e uma casa de cada vez.',
-        'Se uma pedra chegar a ultima linha adversária, ela é promovida a dama.',
-        'Damas podem se movimentar em qualquer direção que haja uma casa livre.',
-        'A captura pode ser feita em qualquer direção por qualquer peça,desde que hava uma casa livre em seguida.',
-        'Ao relizar uma captura em sequência, a peça só é promovida se parar numa casa na ultima linha.',
-        'Um jogador perde,se ao inicio de seu turno não possuir mais jogadas ou tempo disponíveis.'
-    ]
-    const divRules = $('.rules')
-    divRules.append('<div class="rulesTitle">Regras</div>')
-    divRules.append('<div class="rulesCont"></div>')
 
-    rulesBr.forEach((e,i) => {
-        $('.rulesCont').append(`<p class="">${i+1}-${e}</p>`)
-    });
-}
 
-//Colapsar as regras com o click no titulo.
-function dropRules(e) {
-    $('.rulesCont').slideToggle(700);
-}
 
-let stopwatch = null
-function play(player) {
-    const cron = $('#'+player)
-    let time = cron.html().split(':').map(Number)
-    time = time[0]*60 + time[1]
-    pauseCrom()
-    
-    stopwatch =setInterval(() => {
-        time -=1
-        const min = Math.floor(time/60)
-        const sec = time%60
-        cron.html(`${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`)
-    }, 1000);
-}
-function pauseCrom(){
-    clearInterval(stopwatch)
-}
-//1-Pegar o tempo do relogio
-//2-Converter em segundos
-//3-Reduzir 1s a cada segundo
-//4-Ao trocar de 'relogio' recomeçar a contagem com o novo relógio.
 
 lateralBoard()
 makeBoard();
-start()
-play('stopwatch1')
-drawRules()
-const dRules = $('.rulesTitle').get(0)
-const tstFunc = $('#teste1').get(0)
-const tstFunc2 = $('#teste2').get(0)
+//start()
+
+
+
 board.addEventListener('click', select)
-dRules.addEventListener('click', dropRules)
-tstFunc2.addEventListener('click',pauseCrom)
-//Caraca 280 linhas. Dava pra fazer menor?
 
-
-//const btnTeste = $('#tst').get(0)
-//btnTeste.addEventListener('click', countMoviments)

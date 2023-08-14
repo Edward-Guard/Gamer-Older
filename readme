@@ -8,11 +8,12 @@ Próximas tarefas
 7-Marcar a pontuação. ok
 8-Habilitar a aquisição de uma 'dama'.ok
 9-Fim de jogo se o jogador da vez não puder fazer mais movimentos,se não possuir mais peças ou condições especiais. 80%
+  9.1 Fim de jogo por timeout
 10-2 Bugs achados
   10.1-Ao ter mais de uma opção de captura,caso faça uma a outra permanece marcada. sumiu???
   10.2-Ao iniciar uma captura sequencial e não finalizar, o jogador pode selecionar novamente a peça e fazer movimento com outra.
 11-Habilitar a Dama voadora
-12-Habilitar o funcionamento do cronômetro.
+12-Habilitar o funcionamento do cronômetro. ok
 13-Estilizar completamente as informações latarais
 
 Cores madeira
@@ -23,8 +24,3 @@ Cores madeira
 5- cor-rgba(63, 48, 38, 1)
 
 Box-shadow-Peças - 0px 3px 3px 0px rgba(0,0,0,0.7),inset 0px 1px 6px 1px rgba(0,0,0,9);
-
-Criando fliper relogio-Pontuação
-1-Container 3d h,L e Prof(perspective 1000px)
-2-Criar o elemento a ser rotacionado fliper
-3-Criar a frente e o verso desse elemento. Frente-Tempo Verso-Pontuação

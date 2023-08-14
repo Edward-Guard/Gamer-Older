@@ -7,8 +7,6 @@
 }
 
 #board{
-    width: 640px;
-    height: auto;
     display: grid;
     grid-template-columns: repeat(8,80px);
     grid-template-rows: repeat(8,80px);
@@ -44,30 +42,17 @@
     border: 3px solid red;
 }
 
-.t0{
-    background-color: beige;
-    width: 900px;
-}
-
-.t1{
-    border: 1px solid black;
-    
-}
-
-
 .relogio{
     display: flex;
     flex-direction: row;
     justify-content: center;
     height: 42px;
-    border: 1px black solid;
+    border: 3px black solid;
     width: 200px;
     border-radius: 18px;
     overflow: hidden;
     background-color: grey;
-    margin-top: 10px;
-    
-
+    margin-top: 5px;
 }
 
 #time1, #time2{
@@ -98,6 +83,7 @@
 i{
     background-color: var(--color3);
     transition: 1s;
+
     
 }
 
@@ -123,9 +109,8 @@ i{
 .pContent{ 
     margin: 0;
     padding: 0;
-    padding: 10px;
+    padding-top: 5px;
     display: grid;
-    height: 700px;
     width: 700px;
     grid-template: 
     "navT navT navT" 20px
@@ -166,7 +151,6 @@ i{
 }
 .board{
     grid-area: board;
-    background-color: bisque;
 }
 .navR{
     grid-area: navR;
@@ -183,40 +167,43 @@ ul.navR li,ul.navT li{
 
 }
 
-.anexos{
-
-    height: 750px;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template: 
-    'rules'
-    'oldMovments'
-    /196px;
+.content{
+    width: 700px;
+    margin: auto;
 }
 
-.rules{
-    grid-area: rules;
-}
-.oldMovments{
-    grid-area: oldMovments;
+#rules{
+    background-color:var(--color1);
+    height: auto;
+    width: 201px;
+    top: 35px;
+    position: absolute;
+    z-index: 1;
+    border:black solid;
+    border-width: 0px 1px 1px 1px;
+    border-radius: 0px 0px 10px 10px;
     
 }
-
-.rulesTitle{
-    font-weight: bold;
-    font-size: 26px;
-    border: 1px solid black;
-}
-.scoreTitle{
-    font-weight: bold;
-    font-size: 26px;
-}
-.scoreContent{
-    font-size: 18px;
-    font-weight: bold;
+body{
+    background-image: url('https://img.freepik.com/fotos-premium/fundo-de-madeira-velho-grunge-texturizado-escuro_7182-1588.jpg');
+    background-size: cover;
 }
 
-.ocult{
-    display: none;
+#lastMov ,#shRules{
+    background-color: var(--color1);
+    color: white;
+    border-radius: 5px 5px 0px 0px;
+    border: 1px black solid;
+    height: 30px;
+}
+
+#menu{
+    color: black;
+    background-color: white;
+    height: 120px;
+    width: 300px;
+    position: absolute;
+    top: 40%;
+    left: 35%;
+
 }
