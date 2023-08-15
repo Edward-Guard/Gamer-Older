@@ -1,6 +1,6 @@
 const board = document.getElementById('board')
 let stopwatch = null
-
+let stopwatchActive = false
 
 const color1 = 'rgb(216, 165, 121)' //Peça-1
 const color2 = 'rgb(140, 85, 53)' //Peça-2
@@ -49,7 +49,15 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
             indexs.forEach((e, j) => { $('.' + classes[i]).append(`<li>${indexs[j]}</li>`) });
         });
     }
+    function reset() {
+        document.getElementById('score1').innerHTML = '0'
+        document.getElementById('score2').innerHTML = '0'
+        document.getElementById('stopwatch1').innerHTML = '0:10'
+        document.getElementById('stopwatch2').innerHTML = '05:00'
+    }
+
     function start() {
+        reset()
         const house = document.getElementById('board').children
         let count = 0
         for (let i = 1; i < 64; i += 1) {
@@ -66,6 +74,7 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
             }
         }
         play('stopwatch1')
+        toogleMenu()
     }
 
 }
@@ -241,9 +250,8 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
             clock.addClass('change');
             player = 'stopwatch1'
         }
-        winner()
         play(player)
-
+        winner()
     }
     function promotion() {
         //Peça branca chegar a linha 0
@@ -277,25 +285,36 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
         const nMovs = moviment.reduce((a, b) => a + b)
         return nMovs
     }
-    function winner() {
+    function winner(timeOut) {
         const movs1 = countMoviments(color1)
         const movs2 = countMoviments(color2)
+        //Jogador 1 Ganhar, 2 não ter movimentos ou não ter tempo.
+        //Jogador 2 ganhar, 1 Não ter tempo ou movimentos disponíveis.
 
-        if (movs2 == 0) {
-            $('#result').text('Jogador 1 Venceu!').removeClass('ocult');
-        } else if (movs1 == 0) {
-            $('#result').text('Jogador 2 Venceu!').removeClass('ocult');
+        //Jogo não iniciado // Jogo Ocorrendo // Jogo Terminado
+        //Menu é para desaparecer enquanto o jogo estiver ocorrendo.
+
+        if (timeOut && timeOut === 'stopwatch1' || movs1 == 0) {    
+            console.log('O jogador 2 Venceu!');
+            pause()
+            toogleMenu()
+            
+        }else if(timeOut && timeOut === 'stopwatch2' || movs2 == 0){
+            console.log('O jogador 1 Venceu!');
+            pause()
+            toogleMenu()
         }
+
     }
     function play(player) {
         let time = $('#' + player).html().split(':').map(Number)
         time = time[0] * 60 + time[1]
         pause()
-
+        stopwatchActive = true
         stopwatch = setInterval(() => {
             if (time == 0) {
                 pause()
-                console.log('Acabou');
+                winner(player)
             } else {
                 time -= 1
                 const min = Math.floor(time / 60)
@@ -307,6 +326,7 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
     }
     function pause() {
         clearInterval(stopwatch)
+        stopwatchActive = false
     }
     function score() {
         const cron = $('.relogio').get(0)
@@ -318,17 +338,24 @@ const color4 = 'rgb(63, 48, 38)'//Ladrilho Escuro
             $('#score2').html(Number(score) + 1)
         }
     }
+
+    function toogleMenu() {
+        const menu = document.getElementById('menu')
+        if (stopwatchActive) {
+            menu.style.display = 'none'
+        }else{
+            menu.style.display = 'flex'
+        }
+    }
 }
 //Função em implemetanção.
 
-
-
-
 lateralBoard()
 makeBoard();
-//start()
+pause()
+const btnStart = document.getElementById('startButton')
 
 
-
+btnStart.addEventListener('click', start)
 board.addEventListener('click', select)
 

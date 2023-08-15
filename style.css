@@ -76,11 +76,11 @@
 
 }
 
-.change > i {
+.change > .bi-stopwatch {
     background-color: var(--color1);
 } 
 
-i{
+.bi-stopwatch{
     background-color: var(--color3);
     transition: 1s;
 
@@ -199,11 +199,20 @@ body{
 
 #menu{
     color: black;
-    background-color: white;
-    height: 120px;
-    width: 300px;
+    background-image: url('https://image.api.playstation.com/vulcan/ap/rnd/202011/0918/7cij6PoM76873UJ8GKeNe85F.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 340px;
+    width: 600px;
     position: absolute;
-    top: 40%;
-    left: 35%;
-
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    border-radius: 10px;
+    margin-top: 150px;
+    margin-left: 40px;
+}
+#startButton{
+    height: 40px;
+    margin-bottom: 20px;
 }
